@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.config(function($routeProvider, $locationProvider) {
+.config(($routeProvider, $locationProvider) => {
   $routeProvider
   .when('/', {
     templateUrl: 'views/main/main.html',
