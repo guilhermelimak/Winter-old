@@ -2,7 +2,7 @@
   "name": "winter",
   "productName": "Winter",
   "version": "0.0.0",
-  "description": "Twitter client",
+  "description": "A really cool twitter client.",
   "license": "MIT",
   "repository": "armand1m/winter",
   "author": {
@@ -27,9 +27,9 @@
     "electron"
   ],
   "dependencies": {
-    "electron-debug": "^0.5.0"
   },
   "devDependencies": {
+    "electron-debug": "^0.5.0",
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.36.0",
     "gulp": "^3.9.0",

@@ -4,7 +4,9 @@ const del = require('del');
 
 var src = {
   globs: {
-    html: ['./src/**/*.html']
+    html: ['./src/**/*.html'],
+    sass: ['./src/scss/**/*.scss'],
+    js: ['./src/js/**/*.js']
   },
   folder: './src/',
   sass: ['./src/scss/main.scss']
@@ -15,10 +17,11 @@ var dest = {
     all: ['./build/']
   },
   folder: './build/',
-  css: './build/css'
+  css: './build/css',
+  js: './build/js'
 };
 
-gulp.task('copy', (done) => {
+gulp.task('html', (done) => {
   gulp
   .src(src.globs.html)
   .pipe(gulp.dest(dest.folder))
@@ -33,9 +36,17 @@ gulp.task('sass', (done) => {
   .on('end', done);
 });
 
-gulp.task('watchers', () => {
-  gulp.watch(src.sass, ['sass']);
-  gulp.watch(src.globs.html, ['copy']);
+gulp.task('js', (done) => {
+  gulp
+  .src(src.globs.js)
+  .pipe(gulp.dest(dest.js))
+  .on('end', done);
 });
 
-gulp.task('default', ['watchers', 'copy', 'sass']);
+gulp.task('watchers', () => {
+  gulp.watch(src.globs.sass, ['sass']);
+  gulp.watch(src.globs.html, ['html']);
+  gulp.watch(src.globs.js, ['js']);
+});
+
+gulp.task('default', ['watchers', 'html', 'js', 'sass']);

@@ -1,6 +1,6 @@
-# winter
+# Winter
 
-> My cat&#39;s pajamas app
+> A really cool twitter client.
 
 
 ## Dev
