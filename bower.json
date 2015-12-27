@@ -1,0 +1,22 @@
+{
+  "name": "winter",
+  "description": "Twitter client",
+  "main": "index.js",
+  "authors": [
+    "[object Object]"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "electron-app",
+    "electron"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
