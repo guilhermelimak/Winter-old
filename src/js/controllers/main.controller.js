@@ -3,11 +3,15 @@
 
   angular
   .module('winter')
-  .controller('MainController', () => new MainController());
+  .controller('MainController', (TwitterApi) => new MainController(TwitterApi));
 
   class MainController {
+    constructor(TwitterApi) {
+      this.api = new TwitterApi();
+    }
+
     auth() {
-      console.log(this.user);
+      console.log(this.api.getTweet());
     }
 
     reset(form) {
