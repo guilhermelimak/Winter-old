@@ -27,12 +27,14 @@
     "electron"
   ],
   "dependencies": {
+    "twitter": "^1.2.5"
   },
   "devDependencies": {
     "electron-debug": "^0.5.0",
     "electron-packager": "^5.0.0",
     "electron-prebuilt": "^0.36.0",
     "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.1",
     "gulp-sass": "^2.1.1",
     "xo": "^0.12.0"

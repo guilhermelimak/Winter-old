@@ -1,18 +1,20 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const browserify = require('gulp-browserify');
 const del = require('del');
 
-var src = {
+const src = {
   globs: {
     html: ['./src/**/*.html'],
     sass: ['./src/scss/**/*.scss'],
     js: ['./src/js/**/*.js']
   },
   folder: './src/',
-  sass: ['./src/scss/main.scss']
+  sass: ['./src/scss/main.scss'],
+  browserify: './src/js/app.browserify.js'
 };
 
-var dest = {
+const dest = {
   globs: {
     all: ['./build/']
   },
@@ -38,7 +40,8 @@ gulp.task('sass', (done) => {
 
 gulp.task('js', (done) => {
   gulp
-  .src(src.globs.js)
+  .src(src.browserify)
+  .pipe(browserify())
   .pipe(gulp.dest(dest.js))
   .on('end', done);
 });

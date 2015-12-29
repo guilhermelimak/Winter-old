@@ -3,15 +3,25 @@
 
   angular
   .module('winter')
-  .controller('MainController', (TwitterApi) => new MainController(TwitterApi));
+  .controller('MainController', (Twitter) => new MainController(Twitter));
 
   class MainController {
-    constructor(TwitterApi) {
-      this.api = new TwitterApi();
+    constructor(Twitter) {
+      this.twitter = Twitter;
     }
 
     auth() {
-      console.log(this.api.getTweet());
+      var params = {
+        screen_name: 'armand1m'
+      };
+
+      this
+      .twitter
+      .get('statuses/user_timeline', params, (error, tweets, response) => {
+        if (!error) {
+          console.log(tweets);
+        }
+      });
     }
 
     reset(form) {
