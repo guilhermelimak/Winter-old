@@ -1,1 +1,3 @@
-angular.module('winter', ['ngRoute']);
+(() => {
+  angular.module('winter', ['ngRoute']);
+})();

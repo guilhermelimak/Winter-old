@@ -5,37 +5,13 @@
 
 <hr>
 
-<form name="loginform" class="form">
-  <div class="form-group">
-    <label>
-      Username
-      <input
-        required
-        class="form-control"
-        placeholder="username"
-        ng-model="main.user.username">
-    </label>
-  </div>
-  <div class="form-group">
-    <label>
-      Password
-      <input
-        required
-        class="form-control"
-        type="password"
-        placeholder="passw0rd!"
-        ng-model="main.user.password">
-    </label>
-  </div>
-  <button
-    type="submit"
-    class="btn btn-default"
-    ng-click="main.auth()">
-    Login
-  </button>
-  <button
-    class="btn btn-default"
-    ng-click="main.reset(loginform)">
-    Reset
-  </button>
-</form>
+<div class="col-sm-12 text-center">
+  <form name="loginform" class="form">
+    <button
+      type="submit"
+      class="btn btn-default"
+      ng-click="main.auth()">
+      Login
+    </button>
+  </form>
+</div>

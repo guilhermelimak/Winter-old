@@ -1,14 +1,27 @@
 (() => {
-  const Twitter = require('twitter');
+  const Twitter = require('node-twitter-api');
+  const Credentials = {
+    consumerKey: "tS6cGe76gSnTvwCz85VxN7KoM",
+    consumerSecret: "JGhwA8WXsfz7fyv2pvc47PmZ6NlqBMMjhWKdHx0w3fTfumCMUX",
+    callback: 'oob'
+  };
 
   angular
   .module('winter')
   .factory('Twitter', () => {
-    return new Twitter({
-      consumer_key: 'tS6cGe76gSnTvwCz85VxN7KoM',
-      consumer_secret: 'JGhwA8WXsfz7fyv2pvc47PmZ6NlqBMMjhWKdHx0w3fTfumCMUX',
-      access_token_key: '1605976506-SHQ25GBd0NsPQ2vWPOKnZszMHZ9tjPlXTpEGJQn',
-      access_token_secret: 'P4cZVmh5mHfvdJDiK5mOO2KCzjReGyu8hNWrJIbt9rxmF',
-    });
+    return function(accessToken) {
+      if (!accessToken) {
+        return new Twitter(Credentials);
+      }
+
+      var authorizedCredentials = {
+        "consumer_key":        Credentials['consumerKey'],
+        "consumer_secret":     Credentials['consumerSecret'],
+        "access_token_key":    accessToken['accessToken'],
+        "access_token_secret": accessToken['accessTokenSecret'],
+      };
+
+      return new Twitter(authorizedCredentials);
+    }
   });
 })();

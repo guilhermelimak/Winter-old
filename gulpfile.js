@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const browserify = require('gulp-browserify');
 const del = require('del');
+const concat = require('gulp-concat');
 
 const src = {
   globs: {
@@ -11,7 +12,14 @@ const src = {
   },
   folder: './src/',
   sass: ['./src/scss/main.scss'],
-  browserify: './src/js/app.browserify.js'
+  js: [
+    './bower_components/angular/angular.js',
+    './bower_components/angular-route/angular-route.js',
+    './src/js/app.module.js',
+    './src/js/app.config.js',
+    './src/js/services/twitter.service.js',
+    './src/js/controllers/main.controller.js'
+  ]
 };
 
 const dest = {
@@ -40,8 +48,8 @@ gulp.task('sass', (done) => {
 
 gulp.task('js', (done) => {
   gulp
-  .src(src.browserify)
-  .pipe(browserify())
+  .src(src.js)
+  .pipe(concat('app.js'))
   .pipe(gulp.dest(dest.js))
   .on('end', done);
 });
@@ -52,4 +60,6 @@ gulp.task('watchers', () => {
   gulp.watch(src.globs.js, ['js']);
 });
 
-gulp.task('default', ['watchers', 'html', 'js', 'sass']);
+gulp.task('default', ['watchers', 'build']);
+
+gulp.task('build', ['html', 'js', 'sass']);
