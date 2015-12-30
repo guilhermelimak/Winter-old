@@ -12,7 +12,7 @@
       this.Twitter = Twitter;
     }
 
-    auth() {
+    authenticate() {
       let client = new this.Twitter();
 
       client.getRequestToken((error, requestToken, requestTokenSecret, results) => {
@@ -32,48 +32,43 @@
             "node-integration": false
           });
 
-          authWindow.webContents.on('will-navigate', (event, url) => {
-            event.preventDefault();
-            var matched = url.match(/\?oauth_token=([^&]*)&oauth_verifier=([^&]*)/);
-            var token = matched[2];
-            
-            console.log(matched, token);
-
-            if (matched) {
-              client.getAccessToken(requestToken, requestSecret, token, (error, accessToken, accessTokenSecret) => {
-                if (error) {
-                  // TODO: THIS AGAIN
-
-                } else {
-                  var token = { accessToken: accessToken, accessTokenSecret: accessTokenSecret };
-
-                  client = new this.Twitter(token);
-
-                  client.verifyCredentials((user) => {
-                    token['screenName']   = user.screen_name;
-                    token['profileImage'] = user.profile_image_url;
-
-                    console.log(token);
-
-                    if (authWindow) {
-                      authWindow.close();
-                    }
-                  });
-
-                }
-              })
-            }
-          });
-
           authWindow.on('closed', () => {
-            authWindow = null;
+            authWindow = null
           });
 
           authWindow.loadURL(`${url}&force_login=true`);
-
-          console.log(authWindow);
       	}
       });
+    }
+
+    authorize() {
+      var client = new this.Twitter();
+
+      console.log(this.pin);
+
+      var requestToken = window.sessionStorage.getItem('requestToken')
+      ,   requestTokenSecret = window.sessionStorage.getItem('requestTokenSecret');
+
+      client.getAccessToken(requestToken, requestTokenSecret, this.pin, (error, accessToken, accessTokenSecret, results) => {
+        if (error) {
+          console.error(error);
+        } else {
+          var token = {
+            accessToken: accessToken,
+            accessTokenSecret: accessTokenSecret
+          };
+
+          console.log(token);
+
+          client.verifyCredentials(accessToken, accessTokenSecret, (error, data, response) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(data, response);
+            }
+          });
+        }
+      })
     }
 
     reset(form) {

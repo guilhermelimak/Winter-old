@@ -9,9 +9,18 @@
   <form name="loginform" class="form">
     <button
       type="submit"
-      class="btn btn-default"
-      ng-click="main.auth()">
-      Login
+      class="btn btn-primary"
+      ng-click="main.authenticate()">
+      Sign in Twitter
     </button>
+    <br><br>
+
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="PIN" ng-model="main.pin">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="main.authorize()" ng-model="main.pin">Go</button>
+      </span>
+    </div>
+
   </form>
 </div>
