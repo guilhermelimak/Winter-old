@@ -20,23 +20,11 @@
           console.log("Error getting OAuth request token : ");
           console.log(error);
         } else {
-          window.sessionStorage.setItem('requestToken', requestToken);
-          window.sessionStorage.setItem('requestTokenSecret', requestTokenSecret);
-          window.sessionStorage.setItem('results', results);
+          window.localStorage.setItem('requestToken', requestToken);
+          window.localStorage.setItem('requestTokenSecret', requestTokenSecret);
+          window.localStorage.setItem('results', results);
 
-          var url = client.getAuthUrl(requestToken);
-
-          var authWindow = new BrowserWindow({
-            width: 1024,
-            height: 640,
-            "node-integration": false
-          });
-
-          authWindow.on('closed', () => {
-            authWindow = null
-          });
-
-          authWindow.loadURL(`${url}&force_login=true`);
+          window.open(`${client.getAuthUrl(requestToken)}&force_login=true`);
       	}
       });
     }
@@ -46,19 +34,19 @@
 
       console.log(this.pin);
 
-      var requestToken = window.sessionStorage.getItem('requestToken')
-      ,   requestTokenSecret = window.sessionStorage.getItem('requestTokenSecret');
+      var requestToken = window.localStorage.getItem('requestToken')
+      ,   requestTokenSecret = window.localStorage.getItem('requestTokenSecret');
 
       client.getAccessToken(requestToken, requestTokenSecret, this.pin, (error, accessToken, accessTokenSecret, results) => {
         if (error) {
           console.error(error);
         } else {
-          var token = {
+          window
+          .localStorage
+          .getItem('accessTokenObject', JSON.stringify({
             accessToken: accessToken,
             accessTokenSecret: accessTokenSecret
-          };
-
-          console.log(token);
+          }));
 
           client.verifyCredentials(accessToken, accessTokenSecret, (error, data, response) => {
             if (error) {
