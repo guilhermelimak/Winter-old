@@ -13,6 +13,7 @@ const src = {
   sass: ['./src/scss/main.scss'],
   js: [
     './bower_components/angular/angular.js',
+    './bower_components/angular-hotkeys/build/hotkeys.js',
     './bower_components/angular-route/angular-route.js',
     './src/js/app.module.js',
     './src/js/app.config.js',

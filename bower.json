@@ -24,5 +24,6 @@
     "angular": "~1.4.8",
     "bootstrap-sass": "bootstrap-sass-official#~3.3.6",
     "font-awesome": "fontawesome#~4.5.0",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0"
   }
 }
