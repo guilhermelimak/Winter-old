@@ -1,8 +1,8 @@
 (() => {
   const Twitter = require('node-twitter-api');
   const Credentials = {
-    consumerKey: "tS6cGe76gSnTvwCz85VxN7KoM",
-    consumerSecret: "JGhwA8WXsfz7fyv2pvc47PmZ6NlqBMMjhWKdHx0w3fTfumCMUX",
+    consumerKey: "bgcQQWYVw8tGDH4CJiOTPsmzo",
+    consumerSecret: "Pg8fIikCaXzoAOkH36z8aaymV1bRTbw0eCLhIuvblBg1R4fU6O",
     callback: 'oob'
   };
 

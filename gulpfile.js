@@ -19,7 +19,8 @@ const src = {
     './src/js/services/twitter.service.js',
     './src/js/controllers/main.controller.js',
     './src/js/controllers/timeline.controller.js'
-  ]
+  ],
+  fonts: './bower_components/font-awesome/fonts/**'
 };
 
 const dest = {
@@ -28,7 +29,8 @@ const dest = {
   },
   folder: './build/',
   css: './build/css',
-  js: './build/js'
+  js: './build/js',
+  fonts: './build/fonts'
 };
 
 gulp.task('html', (done) => {
@@ -54,6 +56,13 @@ gulp.task('js', (done) => {
   .on('end', done);
 });
 
+gulp.task('fonts', (done) => {
+  gulp
+  .src(src.fonts)
+  .pipe(gulp.dest(dest.fonts))
+  .on('end', done);
+});
+
 gulp.task('watchers', () => {
   gulp.watch(src.globs.sass, ['sass']);
   gulp.watch(src.globs.html, ['html']);
@@ -62,4 +71,4 @@ gulp.task('watchers', () => {
 
 gulp.task('default', ['watchers', 'build']);
 
-gulp.task('build', ['html', 'js', 'sass']);
+gulp.task('build', ['html', 'js', 'sass', 'fonts']);

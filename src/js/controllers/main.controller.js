@@ -14,13 +14,9 @@
       this.Twitter = Twitter;
       this.$location = $location;
 
-      console.log(accessTokenObject);
-      
-      if (typeof(accessTokenObject) !== 'undefined') {
-        console.log(accessTokenObject); 
+      if (accessTokenObject != null || accessTokenObject != undefined) {
         this.$location.url('/timeline');
       }
-      
     }
 
     authenticate() {

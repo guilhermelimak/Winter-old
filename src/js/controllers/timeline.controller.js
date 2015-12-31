@@ -10,44 +10,38 @@ angular
 		var client = new Twitter;
 		//do a get Timeline first to populate the timeline and after that getstream to keep geting statuses in realtime
 		client.getTimeline('home',
-			null,	
+			null,
 			token.accessToken,
 			token.accessTokenSecret,
 			(error, data, response) => {
 				if (error) {
-					console.log("fila da puta");
 					console.log(error);
 				} else {
-					console.log(error)
-					console.log(response);
-					console.log(data + "lol");
 					$scope.tweets = data;
 					$scope.$apply();
 				}
 			})
 
 		client.getStream('user',
-			{"with": "followingds"},
+			{ "with": "followingds" },
 			token.accessToken,
 			token.accessTokenSecret,
 			(error, data, response) => {
 				if (error) {
-					console.log(error);
-				} else { 
-					console.log(data + "rox");
-					console.log(data);
-					$scope.$apply();
-				}
-			},			
-			(error, data, response) => {
-				if (error) {
-					console.log("eita porra");
+					console.error(error);
 				} else {
 					console.log(data);
+
+					if (Object.keys(data).length != 0 &&
+							data.friends == undefined) {
+						$scope.tweets.unshift(data);
+						$scope.$apply();
+					}
 				}
-			}
+			},
+			(error, data, response) => { return }
 		);
 	}
 
 	$scope.getTweets();
-}])
+}]);

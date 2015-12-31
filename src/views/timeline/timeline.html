@@ -1,4 +1,24 @@
-<h1> timeline </h1>
 <ul class="list-group">
-	<li class="list-group-item" ng-repeat="tweet in tweets track by $index">{{tweet.text}}</li>	
+	<li class="list-group-item" ng-repeat="tweet in tweets">
+		<div class="media">
+		  <div class="media-left">
+		    <a href="#">
+		      <img
+						class="media-object"
+						alt="{{ tweet.user.name }}"
+						src="{{ tweet.user.profile_image_url }}">
+		    </a>
+		  </div>
+		  <div class="media-body">
+		    <h4 class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+		    {{ tweet.text }}
+
+				<div class="text-right">
+					<i class="fa fa-reply"></i>
+					<i class="fa fa-retweet"></i>
+					<i class="fa fa-star"></i>
+				</div>
+		  </div>
+		</div>
+	</li>
 </ul>
