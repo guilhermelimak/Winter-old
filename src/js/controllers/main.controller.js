@@ -5,11 +5,12 @@
 
   angular
   .module('winter')
-  .controller('MainController', (Twitter) => new MainController(Twitter));
+  .controller('MainController', (Twitter, $location) => new MainController(Twitter, $location));
 
   class MainController {
-    constructor(Twitter) {
+    constructor(Twitter, $location) {
       this.Twitter = Twitter;
+      this.$location = $location;
     }
 
     authenticate() {
@@ -43,7 +44,7 @@
         } else {
           window
           .localStorage
-          .getItem('accessTokenObject', JSON.stringify({
+          .setItem('accessTokenObject', JSON.stringify({
             accessToken: accessToken,
             accessTokenSecret: accessTokenSecret
           }));
@@ -53,6 +54,7 @@
               console.log(error);
             } else {
               console.log(data, response);
+              this.$location.url('/timeline');
             }
           });
         }

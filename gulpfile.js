@@ -17,7 +17,8 @@ const src = {
     './src/js/app.module.js',
     './src/js/app.config.js',
     './src/js/services/twitter.service.js',
-    './src/js/controllers/main.controller.js'
+    './src/js/controllers/main.controller.js',
+    './src/js/controllers/timeline.controller.js'
   ]
 };
 

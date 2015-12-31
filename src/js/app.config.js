@@ -7,6 +7,10 @@
       templateUrl: 'views/main/main.html',
       controller: 'MainController as main'
     })
+    .when('/timeline', {
+      templateUrl: 'views/timeline/timeline.html',
+      controller: 'TimelineController'
+    })
     .otherwise('/');
   });
 })();
