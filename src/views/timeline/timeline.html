@@ -1,4 +1,4 @@
 <h1> timeline </h1>
 <ul class="list-group">
-	<li class="list-group-item" ng-repeat="tweet in tweets">{{tweet.text}}</li>	
+	<li class="list-group-item" ng-repeat="tweet in tweets track by $index">{{tweet.text}}</li>	
 </ul>
