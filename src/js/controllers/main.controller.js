@@ -9,8 +9,18 @@
 
   class MainController {
     constructor(Twitter, $location) {
+      var accessTokenObject = window.localStorage.getItem('accessTokenObject');
+
       this.Twitter = Twitter;
       this.$location = $location;
+
+      console.log(accessTokenObject);
+      
+      if (typeof(accessTokenObject) !== 'undefined') {
+        console.log(accessTokenObject); 
+        this.$location.url('/timeline');
+      }
+      
     }
 
     authenticate() {

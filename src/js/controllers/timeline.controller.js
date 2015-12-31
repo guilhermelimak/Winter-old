@@ -1,39 +1,30 @@
-(() => {
-	'use strict';
+angular
+.module('winter')
+.controller('TimelineController', ['$scope','Twitter', function($scope, Twitter) {
 
-	angular.module('winter')
-		.controller('TimelineController', (Twitter, $location) => new TimelineController(Twitter, $location));
 
-	class TimelineController {
-		constructor(Twitter, $location) {
-			this.Twitter = Twitter;
-			this.$location = $location;
+	$scope.getToken = function() 	{
+		return JSON.parse(window.localStorage.getItem('accessTokenObject'));
+	};
 
-			this.sendTweet();
-		}
+	$scope.getTweets = function() {
+		var token = $scope.getToken();
+		var client = new Twitter;
 
-		getToken() 	{
-			return JSON.parse(window.localStorage.getItem('accessTokenObject'));
-		}
-
-		sendTweet() {
-			var token = this.getToken();
-
-			var client = new this.Twitter;
-
-			client.getTimeline('home',
-				null,
-				token.accessToken,
-				token.accessTokenSecret,
-				(error, data, response) => {
-					if (error) {
-						console.log(error);
-					} else {
-						console.log(response, data);
-					}
+		client.getTimeline('home',
+			null,
+			token.accessToken,
+			token.accessTokenSecret,
+			(error, data, response) => {
+				if (error) {
+					console.log("fila da puta");
+				} else {
+					console.log(data);
+					$scope.tweets = data;
+					$scope.$apply();
 				}
-			);
-		}
+			}
+		);
 	}
-
-})();
+	$scope.getTweets();
+}]);
