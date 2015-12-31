@@ -1,18 +1,22 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope','Twitter', function($scope, Twitter) {
+.controller('TimelineController', ['$scope','Twitter', '$interval', function($scope, $interval, Twitter) {
+	$scope.initialize = function() {
+		$scope.client = new Twitter;
+		$scope.getToken();
+		$scope.tweets = [];
+	}
+	
 	$scope.getToken = function() 	{
-		return JSON.parse(window.localStorage.getItem('accessTokenObject'));
+		$scope.token = JSON.parse(window.localStorage.getItem('accessTokenObject'));
 	};
 
 	$scope.getTweets = function() {
-		var token = $scope.getToken();
-		var client = new Twitter;
 		//do a get Timeline first to populate the timeline and after that getstream to keep geting statuses in realtime
-		client.getTimeline('home',
+		$scope.client.getTimeline('home',
 			null,
-			token.accessToken,
-			token.accessTokenSecret,
+			$scope.token.accessToken,
+			$scope.token.accessTokenSecret,
 			(error, data, response) => {
 				if (error) {
 					console.log(error);
@@ -21,11 +25,13 @@ angular
 					$scope.$apply();
 				}
 			})
+	};
 
-		client.getStream('user',
+	$scope.startStream = function() {
+		$scope.client.getStream('user',
 			{ "with": "followingds" },
-			token.accessToken,
-			token.accessTokenSecret,
+			$scope.token.accessToken,
+			$scope.token.accessTokenSecret,
 			(error, data, response) => {
 				if (error) {
 					console.error(error);
@@ -33,7 +39,8 @@ angular
 					console.log(data);
 
 					if (Object.keys(data).length != 0 &&
-							data.friends == undefined) {
+							data.friends == undefined &&
+							data.created_at !== undefined) {
 						$scope.tweets.unshift(data);
 						$scope.$apply();
 					}
@@ -43,5 +50,39 @@ angular
 		);
 	}
 
-	$scope.getTweets();
+	$scope.retweet = function(tweet) {
+		$scope.client.statuses('retweet', 
+			tweet,
+			$scope.token.accessToken,
+			$scope.token.accessTokenSecret,
+			(error, data, response) => {
+				if (error) {
+					console.log(error);
+					console.log(tweet);
+				} else {
+					console.log(response);
+				}
+			});
+	};
+
+	$scope.favorite = function(tweet) {
+		console.log("favorite");
+	};
+
+	$scope.reply = function(tweet) {
+		console.log("reply");
+	};
+
+	$scope.updateRetweetCount = function() {
+		$interval(function() {
+			console.log("irra");
+		}, 1000);
+		console.log("porra")
+	}
+
+	// $scope.initialize();
+
+	// $scope.getTweets();
+	// $scope.startStream();
+	$scope.updateRetweetCount();
 }]);
