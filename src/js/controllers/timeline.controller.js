@@ -1,8 +1,9 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope','Twitter', '$interval', function($scope, $interval, Twitter) {
+.controller('TimelineController', ['$scope', '$interval', 'Twitter', function($scope, $interval, Twitter) {
 	$scope.initialize = function() {
 		$scope.client = new Twitter;
+
 		$scope.getToken();
 		$scope.tweets = [];
 	}
@@ -73,16 +74,8 @@ angular
 		console.log("reply");
 	};
 
-	$scope.updateRetweetCount = function() {
-		$interval(function() {
-			console.log("irra");
-		}, 1000);
-		console.log("porra")
-	}
+	$scope.initialize();
 
-	// $scope.initialize();
-
-	// $scope.getTweets();
-	// $scope.startStream();
-	$scope.updateRetweetCount();
+	$scope.getTweets();
+	$scope.startStream();
 }]);
