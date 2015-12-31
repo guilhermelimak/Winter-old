@@ -12,33 +12,27 @@
 			this.sendTweet();
 		}
 
-
-
 		getToken() 	{
-			var token = window.localStorage.getItem('accessTokenObject');
-			return token;
+			return JSON.parse(window.localStorage.getItem('accessTokenObject'));
 		}
 
 		sendTweet() {
 			var token = this.getToken();
-			
-			var accessToken = token['accessToken']
-				, accessTokenSecret = token['accessTokenSecret'];
-			
+
 			var client = new this.Twitter;
 
-			client.getTimeline('home', 
+			client.getTimeline('home',
 				null,
-				accessToken,
-				accessTokenSecret,
-				function(error, data, response) {
+				token.accessToken,
+				token.accessTokenSecret,
+				(error, data, response) => {
 					if (error) {
 						console.log(error);
 					} else {
 						console.log(response, data);
 					}
 				}
-			)
+			);
 		}
 	}
 
