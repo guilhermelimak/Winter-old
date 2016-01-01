@@ -38,7 +38,7 @@ angular
 	}
 
 	function retweet(tweet) {
-		client.statuses('retweet', { id: tweet.id }, (data, response) => {
+		client.statuses('retweet', { id: tweet.id_str }, (data, response) => {
 			console.log(data);
 			console.log(response);
 		});
