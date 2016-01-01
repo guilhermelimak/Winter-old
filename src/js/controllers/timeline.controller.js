@@ -33,9 +33,7 @@ angular
 	}
 
 	function startStream() {
-		client.getStream('user', { "with": "followingds" }, (data, response) => {
-			console.log(data);
-
+		client.getStream('user', { "with": "followings" }, (data, response) => {
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&
 					data.created_at !== undefined) {
@@ -46,15 +44,22 @@ angular
 	}
 
 	function retweet(tweet) {
-		client.statuses('retweet', { id: tweet.id_str }, (data, response) => {
-			console.log(data);
-			console.log(response);
+		client.statuses("retweet", { id: tweet.id_str }, (data, response) => {
+			console.log("retweeted");
 		});
 	}
 
 	function favorite(tweet) {
-		client.favorites('create', { id: tweet.id_str }, (data, response) => {
-			console.log(data);
+		console.log(tweet.favorited, tweet)
+		if (tweet.favorited === true) {
+			type = 'destroy';
+			tweet.favorited = false;	
+		} else {
+			type = 'create';
+			tweet.favorited = true;
+		}
+
+		client.favorites(type, { id: tweet.id_str }, (data, response) => {
 			console.log(response);
 		});;
 	}
