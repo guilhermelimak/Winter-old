@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', 'Twitter', 'hotkeys', function($scope, $interval, Twitter, hotkeys) {
+.controller('TimelineController', ['$scope', '$interval', 'Twitter', function($scope, $interval, Twitter) {
 	const client = new Twitter;
 
 	$scope.initialize = initialize;
@@ -12,14 +12,6 @@ angular
 
 	function initialize() {
 		$scope.tweets = [];
-
-		hotkeys.add({
-	    combo: 'n',
-	    description: 'new tweet',
-	    callback: function() {
-	    	console.log('irra');
-	    }
-	  });
 
 		$scope.getTweets();
 		$scope.startStream();
@@ -46,11 +38,10 @@ angular
 	}
 
 	function retweet(tweet) {
-		console.log(tweet);
-		// client.statuses('retweet', tweet, (data, response) => {
-		// 	console.log(data);
-		// 	console.log(response);
-		// });
+		client.statuses('retweet', { id: tweet.id }, (data, response) => {
+			console.log(data);
+			console.log(response);
+		});
 	}
 
 	function favorite(tweet) {

@@ -10,26 +10,14 @@
   .module('winter')
   .factory('Twitter', () => {
     return function(accessToken) {
-      var twitter = null;
-
-      if (!accessToken) {
-        twitter = new Twitter(Credentials);
-      } else {
-        var authorizedCredentials = {
-          "consumer_key":        Credentials['consumerKey'],
-          "consumer_secret":     Credentials['consumerSecret'],
-          "access_token_key":    accessToken['accessToken'],
-          "access_token_secret": accessToken['accessTokenSecret'],
-        };
-
-        twitter = new Twitter(authorizedCredentials);
-      }
+      var twitter = new Twitter(Credentials);
+      var accessTokenObject =  JSON.parse(window.localStorage.getItem('accessTokenObject'));
 
       return {
         getTimeline(type, callback, params) {
           twitter.getTimeline(type, params || null,
-      			authorizedCredentials["access_token_key"],
-      			authorizedCredentials["access_token_secret"],
+      			accessTokenObject['accessToken'],
+      			accessTokenObject['accessTokenSecret'],
       			(error, data, response) => {
       				if (error) {
       					console.error(error);
@@ -42,8 +30,8 @@
         },
         getStream(type, params, dataCallback, endCallback) {
           twitter.getStream(type, params || null,
-            authorizedCredentials["access_token_key"],
-      			authorizedCredentials["access_token_secret"],
+            accessTokenObject['accessToken'],
+      			accessTokenObject['accessTokenSecret'],
       			(error, data, response) => {
       				if (error) {
       					console.error(error);
@@ -56,9 +44,9 @@
       		);
         },
         statuses(type, params, callback) {
-          $scope.client.statuses(type, params,
-            authorizedCredentials["access_token_key"],
-      			authorizedCredentials["access_token_secret"],
+          twitter.statuses(type, params,
+            accessTokenObject['accessToken'],
+      			accessTokenObject['accessTokenSecret'],
       			(error, data, response) => {
       				if (error) {
       					console.error(error);
@@ -68,7 +56,11 @@
               return callback(data, response);
       			}
           );
-        }
+        },
+        getRequestToken: twitter.getRequestToken.bind(twitter),
+        getAccessToken: twitter.getAccessToken.bind(twitter),
+        verifyCredentials: twitter.verifyCredentials.bind(twitter),
+        getAuthUrl: twitter.getAuthUrl.bind(twitter)
       };
     }
   });
