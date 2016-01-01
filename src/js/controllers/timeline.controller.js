@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', 'Twitter', function($scope, $interval, Twitter) {
+.controller('TimelineController', ['$scope', '$interval', 'Twitter', 'hotkeys', function($scope, $interval, Twitter, hotkeys) {
 	const client = new Twitter;
 
 	$scope.initialize = initialize;
@@ -15,6 +15,14 @@ angular
 
 		$scope.getTweets();
 		$scope.startStream();
+
+		hotkeys.add({
+			combo: 'n',
+			description: 'new tweet',
+			callback: function() {
+				console.log('irra');
+			}
+		});
 	}
 
 	function getTweets() {
