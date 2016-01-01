@@ -53,7 +53,10 @@ angular
 	}
 
 	function favorite(tweet) {
-		console.log("favorite");
+		client.favorites('create', { id: tweet.id_str }, (data, response) => {
+			console.log(data);
+			console.log(response);
+		});;
 	}
 
 	function reply(tweet) {
