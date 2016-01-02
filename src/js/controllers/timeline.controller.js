@@ -33,9 +33,12 @@ angular
     return tweet;
   }
 
+	function _getTweetType(data) {
+
+	}
+
 	function getTweets() {
 		client.getTimeline('home', (data, response) => {
-
 			for (var i = data.length; i--;) {
 				data[i] = _detectLinks(data[i])
 			}
@@ -60,9 +63,7 @@ angular
 	}
 
 	function retweet(tweet) {
-		client.statuses("retweet", { id: tweet.id_str }, (data, response) => {
-			console.log("retweeted");
-		});
+		client.statuses("retweet", { id: tweet.id_str }, angular.noop);
 	}
 
 	function favorite(tweet) {
@@ -76,15 +77,11 @@ angular
 			tweet.favorited = true;
 		}
 
-		client.favorites(type, { id: tweet.id_str }, (data, response) => {
-			console.log(response);
-		});
+		client.favorites(type, { id: tweet.id_str }, angular.noop);
 	}
 
 	function reply(replyObject) {
-		client.statuses('update', replyObject, (data, response) => {
-			console.log(data, response);
-		});
+		client.statuses('update', replyObject, angular.noop);
 	}
 
 	function showReplyModal(tweet) {
