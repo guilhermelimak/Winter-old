@@ -11,7 +11,8 @@
 		  </div>
 		  <div class="media-body">
 		    <h4 class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
-		    {{ tweet.text }}
+
+				<p ng-bind-html="tweet.text"></p>
 
 				<div class="text-right">
 					<a class="fa fa-retweet" ng-click="retweet(tweet)"> {{ tweet.retweet_count }}</a>

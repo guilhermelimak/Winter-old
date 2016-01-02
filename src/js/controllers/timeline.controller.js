@@ -1,85 +1,92 @@
-angular
-.module('winter')
-.controller('TimelineController', ['$scope', '$interval', 'Twitter', 'hotkeys', function($scope, $interval, Twitter, hotkeys) {
-	const client = new Twitter;
+(() => {
+	'use strict';
 
-	$scope.initialize = initialize;
-	$scope.getTweets = getTweets;
-	$scope.startStream = startStream;
-	$scope.retweet = retweet;
-	$scope.favorite = favorite;
-	$scope.reply = reply;
+	angular
+	.module('winter')
+	.controller('TimelineController', ['$scope', '$interval', 'Twitter', 'hotkeys', '$sce', function($scope, $interval, Twitter, hotkeys, $sce) {
+		const client = new Twitter;
 
-	function initialize() {
-		$scope.tweets = [];
+		$scope.initialize = initialize;
+		$scope.getTweets = getTweets;
+		$scope.startStream = startStream;
+		$scope.retweet = retweet;
+		$scope.favorite = favorite;
+		$scope.reply = reply;
+		$scope.openUrl = openUrl;
 
-		$scope.getTweets();
-		$scope.startStream();
+		function initialize() {
+			$scope.tweets = [];
 
-		hotkeys.add({
-			combo: 'n',
-			description: 'new tweet',
-			callback: function() {
-				console.log('irra');
-			}
-		});
-	}
-  function detectLinks(data) {
-    for (tweet in data) { 
-      data[tweet].text.replace( /(http:\/\/[^\s]+)/gi , '<a href="$1">$1</a>' );
+			$scope.getTweets();
+			$scope.startStream();
 
-      console.log(data[tweet].text);
-      console.log(tweet);
-    }
-
-    return data;
-
-  }
-
-	function getTweets() {
-		client.getTimeline('home', (data, response) => {
-			data = detectLinks(data);
-
-			$scope.tweets = data;
-			$scope.$apply();
-		});
-	}
-
-	function startStream() {
-		client.getStream('user', { "with": "followings" }, (data, response) => {
-			if (Object.keys(data).length != 0 &&
-					data.friends == undefined &&
-					data.created_at !== undefined) {
-				$scope.tweets.unshift(data);
-				$scope.$apply();
-			}
-		});
-	}
-
-	function retweet(tweet) {
-		client.statuses("retweet", { id: tweet.id_str }, (data, response) => {
-			console.log("retweeted");
-		});
-	}
-
-	function favorite(tweet) {
-		console.log(tweet.favorited, tweet)
-		if (tweet.favorited === true) {
-			type = 'destroy';
-			tweet.favorited = false;	
-		} else {
-			type = 'create';
-			tweet.favorited = true;
+			hotkeys.add({
+				combo: 'n',
+				description: 'new tweet',
+				callback: function() {
+					console.log('irra');
+				}
+			});
 		}
 
-		client.favorites(type, { id: tweet.id_str }, (data, response) => {
-			console.log(response);
-		});;
-	}
+	  function detectLinks(tweet) {
+			tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+			tweet.text = $sce.trustAsHtml(tweet.text);
 
-	function reply(tweet) {
-		console.log("reply");
-	}
+	    return tweet;
+	  }
 
-	$scope.initialize();
-}]);
+		function getTweets() {
+			client.getTimeline('home', (data, response) => {
+
+				for (var i = data.length; i--;) {
+					console.log(data[i].text);
+					data[i] = detectLinks(data[i])
+					console.log(data[i].text);
+				}
+
+				$scope.tweets = data;
+
+				$scope.$apply();
+			});
+		}
+
+		function startStream() {
+			client.getStream('user', { "with": "followings" }, (data, response) => {
+				if (Object.keys(data).length != 0 &&
+						data.friends == undefined &&
+						data.created_at !== undefined) {
+					$scope.tweets.unshift(data);
+					$scope.$apply();
+				}
+			});
+		}
+
+		function retweet(tweet) {
+			client.statuses("retweet", { id: tweet.id_str }, (data, response) => {
+				console.log("retweeted");
+			});
+		}
+
+		function favorite(tweet) {
+			console.log(tweet.favorited, tweet)
+			if (tweet.favorited === true) {
+				type = 'destroy';
+				tweet.favorited = false;
+			} else {
+				type = 'create';
+				tweet.favorited = true;
+			}
+
+			client.favorites(type, { id: tweet.id_str }, (data, response) => {
+				console.log(response);
+			});;
+		}
+
+		function reply(tweet) {
+			console.log("reply");
+		}
+
+		$scope.initialize();
+	}]);
+})();

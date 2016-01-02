@@ -15,6 +15,8 @@ const src = {
     './bower_components/angular/angular.js',
     './bower_components/angular-hotkeys/build/hotkeys.js',
     './bower_components/angular-route/angular-route.js',
+    './bower_components/angular-sanitize/angular-sanitize.js',
+    './src/js/app.globals.js',
     './src/js/app.module.js',
     './src/js/app.config.js',
     './src/js/services/twitter.service.js',

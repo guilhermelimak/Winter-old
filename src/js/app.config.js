@@ -9,7 +9,8 @@
     })
     .when('/timeline', {
       templateUrl: 'views/timeline/timeline.html',
-      controller: 'TimelineController'
+      controller: 'TimelineController',
+      controllerAs: 'timeline'
     })
     .otherwise('/');
   });
