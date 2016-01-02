@@ -1,9 +1,9 @@
 angular
 .module('winter')
 .controller('TimelineController', ['$scope', '$interval', '$uibModal', 'Twitter', 'hotkeys', '$sce', function($scope, $interval, $uibModal, Twitter, hotkeys, $sce) {
-	const client = new Twitter;
+	const client = new Twitter();
 
-	$scope.initialize = initialize;
+	$scope.tweets = [];
 	$scope.getTweets = getTweets;
 	$scope.startStream = startStream;
 	$scope.retweet = retweet;
@@ -11,7 +11,7 @@ angular
 	$scope.reply = reply;
 	$scope.showReplyModal = showReplyModal;
 
-	function initialize() {
+	function _initialize() {
 		$scope.tweets = [];
 
 		$scope.getTweets();
@@ -26,27 +26,26 @@ angular
 		});
 	}
 
-	  function detectLinks(tweet) {
-			tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
-			tweet.text = $sce.trustAsHtml(tweet.text);
+  function _detectLinks(tweet) {
+		tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+		tweet.text = $sce.trustAsHtml(tweet.text);
 
-	    return tweet;
-	  }
+    return tweet;
+  }
 
 	function getTweets() {
-			client.getTimeline('home', (data, response) => {
+		client.getTimeline('home', (data, response) => {
 
-				for (var i = data.length; i--;) {
-					console.log(data[i].text);
-					data[i] = detectLinks(data[i])
-					console.log(data[i].text);
-				}
+			for (var i = data.length; i--;) {
+				data[i] = _detectLinks(data[i])
+			}
 
-				$scope.tweets = data;
+			$scope.tweets = data;
 
-				$scope.$apply();
-			});
-		}
+			$scope.$apply();
+		});
+	}
+
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
 			console.log(data);
@@ -68,6 +67,7 @@ angular
 
 	function favorite(tweet) {
 		console.log(tweet.favorited, tweet)
+
 		if (tweet.favorited === true) {
 			type = 'destroy';
 			tweet.favorited = false;
@@ -78,7 +78,7 @@ angular
 
 		client.favorites(type, { id: tweet.id_str }, (data, response) => {
 			console.log(response);
-		});;
+		});
 	}
 
 	function reply(replyObject) {
@@ -100,5 +100,5 @@ angular
     modalInstance.result.then(reply, angular.noop);
 	}
 
-	$scope.initialize();
+	_initialize();
 }]);
