@@ -24,9 +24,22 @@ angular
 			}
 		});
 	}
+  function detectLinks(data) {
+    for (tweet in data) { 
+      data[tweet].text.replace( /(http:\/\/[^\s]+)/gi , '<a href="$1">$1</a>' );
+
+      console.log(data[tweet].text);
+      console.log(tweet);
+    }
+
+    return data;
+
+  }
 
 	function getTweets() {
 		client.getTimeline('home', (data, response) => {
+			data = detectLinks(data);
+
 			$scope.tweets = data;
 			$scope.$apply();
 		});
