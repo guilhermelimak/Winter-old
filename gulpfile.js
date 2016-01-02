@@ -7,7 +7,8 @@ const src = {
   globs: {
     html: ['./src/**/*.html'],
     sass: ['./src/scss/**/*.scss'],
-    js: ['./src/js/**/*.js']
+    js: ['./src/js/**/*.js'],
+    modules: ['./src/js/modules/**/*.js']
   },
   folder: './src/',
   sass: ['./src/scss/main.scss'],
@@ -36,6 +37,7 @@ const dest = {
   folder: './build/',
   css: './build/css',
   js: './build/js',
+  modules: './build/js/modules',
   fonts: './build/fonts'
 };
 
@@ -69,12 +71,20 @@ gulp.task('fonts', (done) => {
   .on('end', done);
 });
 
+gulp.task('modules', (done) => {
+  gulp
+  .src(src.globs.modules)
+  .pipe(gulp.dest(dest.modules))
+  .on('end', done);
+});
+
 gulp.task('watchers', () => {
   gulp.watch(src.globs.sass, ['sass']);
   gulp.watch(src.globs.html, ['html']);
   gulp.watch(src.globs.js, ['js']);
+  gulp.watch(src.globs.modules, ['modules']);
 });
 
 gulp.task('default', ['watchers', 'build']);
 
-gulp.task('build', ['html', 'js', 'sass', 'fonts']);
+gulp.task('build', ['html', 'js', 'modules', 'sass', 'fonts']);
