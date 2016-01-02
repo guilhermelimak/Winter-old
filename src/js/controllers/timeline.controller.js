@@ -8,7 +8,6 @@ angular
 	$scope.startStream = startStream;
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
-	$scope.reply = reply;
 	$scope.showReplyModal = showReplyModal;
 
 	function initialize() {
@@ -20,18 +19,16 @@ angular
 		hotkeys.add({
 			combo: 'n',
 			description: 'new tweet',
-			callback: function() {
-				console.log('irra');
-			}
+			callback: showNewTweetModal
 		});
 	}
 
-	  function detectLinks(tweet) {
-			tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
-			tweet.text = $sce.trustAsHtml(tweet.text);
+  function detectLinks(tweet) {
+		tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+		tweet.text = $sce.trustAsHtml(tweet.text);
 
-	    return tweet;
-	  }
+    return tweet;
+  }
 
 	function getTweets() {
 			client.getTimeline('home', (data, response) => {
@@ -46,7 +43,8 @@ angular
 
 				$scope.$apply();
 			});
-		}
+	}
+
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
 			console.log(data);
@@ -80,13 +78,7 @@ angular
 			console.log(response);
 		});;
 	}
-
-	function reply(replyObject) {
-		client.statuses('update', replyObject, (data, response) => {
-			console.log(data, response);
-		});
-	}
-
+	
 	function showReplyModal(tweet) {
 		var modalInstance = $uibModal.open({
       animation: true,
@@ -97,8 +89,28 @@ angular
 			}
     });
 
-    modalInstance.result.then(reply, angular.noop);
-	}
+    modalInstance
+    .result
+    .then(function(replyObject) {
+			client.statuses('update', replyObject, (data, response) => {
+				console.log(data, response);
+	    });
+		}, angular.noop);
+  }
+
+  function showNewTweetModal(tweet) {
+		var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'views/modals/new-tweet.html',
+      controller: 'NewTweetModalController'
+    });
+
+    modalInstance
+    .result
+    .then(function(newTweet) {
+			client.statuses('update', newTweet, angular.noop);
+		}, angular.noop);
+  }
 
 	$scope.initialize();
 }]);
