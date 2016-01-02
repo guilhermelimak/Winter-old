@@ -13,13 +13,16 @@ const src = {
   sass: ['./src/scss/main.scss'],
   js: [
     './bower_components/angular/angular.js',
+    './bower_components/angular-bootstrap/ui-bootstrap.js',
+    './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
     './bower_components/angular-hotkeys/build/hotkeys.js',
     './bower_components/angular-route/angular-route.js',
     './src/js/app.module.js',
     './src/js/app.config.js',
     './src/js/services/twitter.service.js',
     './src/js/controllers/main.controller.js',
-    './src/js/controllers/timeline.controller.js'
+    './src/js/controllers/timeline.controller.js',
+    './src/js/controllers/timeline.reply.controller.js'
   ],
   fonts: './bower_components/font-awesome/fonts/**'
 };
