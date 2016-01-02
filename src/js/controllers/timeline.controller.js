@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', '$uibModal', 'Twitter', 'hotkeys', function($scope, $interval, $uibModal, Twitter, hotkeys) {
+.controller('TimelineController', ['$scope', '$interval', '$uibModal', 'Twitter', 'hotkeys', '$sce', function($scope, $interval, $uibModal, Twitter, hotkeys, $sce) {
 	const client = new Twitter;
 
 	$scope.initialize = initialize;
@@ -70,7 +70,7 @@ angular
 		console.log(tweet.favorited, tweet)
 		if (tweet.favorited === true) {
 			type = 'destroy';
-			tweet.favorited = false;	
+			tweet.favorited = false;
 		} else {
 			type = 'create';
 			tweet.favorited = true;
