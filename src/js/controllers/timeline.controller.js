@@ -30,10 +30,6 @@ angular
     return tweet;
   }
 
-	function _getTweetType(data) {
-
-	}
-
 	function getTweets() {
 		client.getTimeline('home', (data, response) => {
 			for (var i = data.length; i--;) {
@@ -44,10 +40,6 @@ angular
 
 			$scope.$apply();
 		});
-	}
-
-				$scope.$apply();
-			});
 	}
 
 	function startStream() {
@@ -66,8 +58,6 @@ angular
 	}
 
 	function favorite(tweet) {
-		console.log(tweet.favorited, tweet)
-
 		if (tweet.favorited === true) {
 			type = 'destroy';
 			tweet.favorited = false;
@@ -96,9 +86,7 @@ angular
     modalInstance
     .result
     .then(function(replyObject) {
-			client.statuses('update', replyObject, (data, response) => {
-				console.log(data, response);
-	    });
+			client.statuses('update', replyObject, angular.noop);
 		}, angular.noop);
   }
 
@@ -116,5 +104,5 @@ angular
 		}, angular.noop);
   }
 
-	$scope.initialize();
+	_initialize();
 }]);
