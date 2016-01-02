@@ -26,13 +26,27 @@ angular
 		});
 	}
 
-	function getTweets() {
-		client.getTimeline('home', (data, response) => {
-			$scope.tweets = data;
-			$scope.$apply();
-		});
-	}
+	  function detectLinks(tweet) {
+			tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+			tweet.text = $sce.trustAsHtml(tweet.text);
 
+	    return tweet;
+	  }
+
+	function getTweets() {
+			client.getTimeline('home', (data, response) => {
+
+				for (var i = data.length; i--;) {
+					console.log(data[i].text);
+					data[i] = detectLinks(data[i])
+					console.log(data[i].text);
+				}
+
+				$scope.tweets = data;
+
+				$scope.$apply();
+			});
+		}
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
 			console.log(data);
