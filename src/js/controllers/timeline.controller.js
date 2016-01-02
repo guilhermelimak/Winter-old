@@ -8,7 +8,6 @@ angular
 	$scope.startStream = startStream;
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
-	$scope.reply = reply;
 	$scope.showReplyModal = showReplyModal;
 
 	function _initialize() {
@@ -20,9 +19,7 @@ angular
 		hotkeys.add({
 			combo: 'n',
 			description: 'new tweet',
-			callback: function() {
-				console.log('irra');
-			}
+			callback: showNewTweetModal
 		});
 	}
 
@@ -49,13 +46,12 @@ angular
 		});
 	}
 
+				$scope.$apply();
+			});
+	}
+
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
-			if (data.retweeted_status) {
-				// data = data.retweeted_status;
-				console.log(data.retweeted_status);
-			}
-
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&
 					data.created_at !== undefined) {
@@ -97,8 +93,28 @@ angular
 			}
     });
 
-    modalInstance.result.then(reply, angular.noop);
-	}
+    modalInstance
+    .result
+    .then(function(replyObject) {
+			client.statuses('update', replyObject, (data, response) => {
+				console.log(data, response);
+	    });
+		}, angular.noop);
+  }
 
-	_initialize();
+  function showNewTweetModal(tweet) {
+		var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'views/modals/new-tweet.html',
+      controller: 'NewTweetModalController'
+    });
+
+    modalInstance
+    .result
+    .then(function(newTweet) {
+			client.statuses('update', newTweet, angular.noop);
+		}, angular.noop);
+  }
+
+	$scope.initialize();
 }]);
