@@ -51,7 +51,10 @@ angular
 
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
-			console.log(data);
+			if (data.retweeted_status) {
+				// data = data.retweeted_status;
+				console.log(data.retweeted_status);
+			}
 
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&

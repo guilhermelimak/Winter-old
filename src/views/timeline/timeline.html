@@ -1,18 +1,31 @@
 <ul class="list-group">
 	<li class="list-group-item" ng-repeat="tweet in tweets">
+		<div class="text-right" ng-if="tweet.retweeted_status">
+			<small> <i class="fa fa-retweet"></i> Retweeted by @{{ tweet.user.screen_name }}</small>
+		</div>
+
 		<div class="media">
 		  <div class="media-left">
 		    <a>
+					<img
+						class="media-object"
+						ng-if="tweet.retweeted_status"
+						alt="{{ tweet.retweeted_status.user.name }}"
+						src="{{ tweet.retweeted_status.user.profile_image_url }}">
 		      <img
 						class="media-object"
+						ng-if="!tweet.retweeted_status"
 						alt="{{ tweet.user.name }}"
 						src="{{ tweet.user.profile_image_url }}">
 		    </a>
 		  </div>
 		  <div class="media-body">
-		    <h4 class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+				<h4 ng-if="tweet.retweeted_status" class="media-heading">{{ tweet.retweeted_status.user.name }} <small>@{{ tweet.retweeted_status.user.screen_name }}</small></h4>
 
-				<p ng-bind-html="tweet.text"></p>
+		    <h4 ng-if="!tweet.retweeted_status" class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+
+				<p ng-if="tweet.retweeted_status" ng-bind-html="tweet.retweeted_status.text"></p>
+				<p ng-if="!tweet.retweeted_status" ng-bind-html="tweet.text"></p>
 
 				<div class="text-right">
 					<a class="fa fa-retweet" ng-click="retweet(tweet)"> {{ tweet.retweet_count }}</a>
