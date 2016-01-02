@@ -1,3 +1,3 @@
 (() => {
-  angular.module('winter', ['ngRoute', 'cfp.hotkeys']);
+  angular.module('winter', ['ngRoute', 'cfp.hotkeys', 'ui.bootstrap']);
 })();

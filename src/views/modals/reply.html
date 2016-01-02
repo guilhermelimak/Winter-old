@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h3 class="modal-title">Reply @{{tweet.user.screen_name}}</h3>
+</div>
+<div class="modal-body">
+  <div>
+    <h4 class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+    {{ tweet.text }}
+  </div>
+  <textarea
+    rows="5"
+    cols="60"
+    ng-model="replyObject.status"
+    autofocus></textarea>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="ok()">Reply</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

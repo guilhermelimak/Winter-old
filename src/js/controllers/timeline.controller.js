@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', 'Twitter', 'hotkeys', function($scope, $interval, Twitter, hotkeys) {
+.controller('TimelineController', ['$scope', '$interval', '$uibModal', 'Twitter', 'hotkeys', function($scope, $interval, $uibModal, Twitter, hotkeys) {
 	const client = new Twitter;
 
 	$scope.initialize = initialize;
@@ -9,6 +9,7 @@ angular
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
 	$scope.reply = reply;
+	$scope.showReplyModal = showReplyModal;
 
 	function initialize() {
 		$scope.tweets = [];
@@ -34,6 +35,8 @@ angular
 
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
+			console.log(data);
+
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&
 					data.created_at !== undefined) {
@@ -64,8 +67,23 @@ angular
 		});;
 	}
 
-	function reply(tweet) {
-		console.log("reply");
+	function reply(replyObject) {
+		client.statuses('update', replyObject, (data, response) => {
+			console.log(data, response);
+		});
+	}
+
+	function showReplyModal(tweet) {
+		var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'views/modals/reply.html',
+      controller: 'ReplyModalController',
+			resolve: {
+				tweet: () => tweet
+			}
+    });
+
+    modalInstance.result.then(reply, angular.noop);
 	}
 
 	$scope.initialize();
