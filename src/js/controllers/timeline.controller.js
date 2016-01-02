@@ -34,7 +34,7 @@ angular
 	}
 
 	function startStream() {
-		client.getStream('user', { "with": "followingds" }, (data, response) => {
+		client.getStream('user', { "with": "followings" }, (data, response) => {
 			console.log(data);
 
 			if (Object.keys(data).length != 0 &&
@@ -57,29 +57,23 @@ angular
 		console.log("favorite");
 	}
 
-	function reply(tweet) {
-		console.log("reply");
+	function reply(replyObject) {
+		client.statuses('update', replyObject, (data, response) => {
+			console.log(data, response);
+		});
 	}
 
 	function showReplyModal(tweet) {
-		console.log(tweet);
-
 		var modalInstance = $uibModal.open({
       animation: true,
-      templateUrl: 'views/timeline/timeline.reply.html',
+      templateUrl: 'views/modals/reply.html',
       controller: 'ReplyModalController',
 			resolve: {
-				tweet: function() {
-					return tweet;
-				}
+				tweet: () => tweet
 			}
     });
 
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      console.log('Modal dismissed at: ' + new Date());
-    });
+    modalInstance.result.then(reply, angular.noop);
 	}
 
 	$scope.initialize();
