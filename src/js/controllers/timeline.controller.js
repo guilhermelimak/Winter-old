@@ -32,7 +32,6 @@ angular
 			tweet.text = $sce.trustAsHtml(tweet.text);
 		}
 
-
     return tweet;
   }
 
@@ -49,11 +48,18 @@ angular
 	}
 
 	function startStream() {
+		var userData = JSON.parse(window.localStorage.getItem('userData'));
+		console.log(userData);
+
 		client.getStream('user', { "with": "followings" }, (data, response) => {
-			console.log(data);
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&
 					data.created_at !== undefined) {
+
+				if (data.in_reply_to_screen_name === userData.screen_name) {
+					new Notification(`You got a mention from @${data.user.screen_name}: ${data.text}`)
+				}
+
 				$scope.tweets.unshift(_detectLinks(data));
 				$scope.$apply();
 			}

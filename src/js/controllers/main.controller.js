@@ -39,8 +39,6 @@
     authorize() {
       var client = new this.Twitter();
 
-      console.log(this.pin);
-
       var requestToken = window.localStorage.getItem('requestToken')
       ,   requestTokenSecret = window.localStorage.getItem('requestTokenSecret');
 
@@ -59,7 +57,10 @@
             if (error) {
               console.log(error);
             } else {
-              console.log(data, response);
+              window
+              .localStorage
+              .setItem('userData', JSON.stringify(data));
+
               this.$location.url('/timeline');
             }
           });
