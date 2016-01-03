@@ -19,7 +19,7 @@ function createMainWindow() {
 		height: 300
 		// resizable: false
 	});
-
+	win.setMenu(null);
 	win.loadURL(`file://${__dirname}/build/index.html`);
 	win.on('closed', onClosed);
 
