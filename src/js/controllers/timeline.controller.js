@@ -8,6 +8,7 @@ angular
 	$scope.startStream = startStream;
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
+	$scope.showReplyModal = Modal.showReplyModal;
 
 	function _initialize() {
 		$scope.tweets = [];
