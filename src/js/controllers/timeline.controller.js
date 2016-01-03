@@ -24,8 +24,14 @@ angular
 	}
 
   function _detectLinks(tweet) {
-		tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
-		tweet.text = $sce.trustAsHtml(tweet.text);
+		if (tweet.retweeted_status) {
+			tweet.retweeted_status.text = tweet.retweeted_status.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+			tweet.retweeted_status.text = $sce.trustAsHtml(tweet.retweeted_status.text);
+		} else {
+			tweet.text = tweet.text.replace(/((http|https):\/\/[^\s]+)/gi, '<a onclick="openUrl(\'$1\')">$1</a>');
+			tweet.text = $sce.trustAsHtml(tweet.text);
+		}
+
 
     return tweet;
   }
@@ -44,10 +50,11 @@ angular
 
 	function startStream() {
 		client.getStream('user', { "with": "followings" }, (data, response) => {
+			console.log(data);
 			if (Object.keys(data).length != 0 &&
 					data.friends == undefined &&
 					data.created_at !== undefined) {
-				$scope.tweets.unshift(data);
+				$scope.tweets.unshift(_detectLinks(data));
 				$scope.$apply();
 			}
 		});
@@ -58,13 +65,8 @@ angular
 	}
 
 	function favorite(tweet) {
-		if (tweet.favorited === true) {
-			type = 'destroy';
-			tweet.favorited = false;
-		} else {
-			type = 'create';
-			tweet.favorited = true;
-		}
+		type = tweet.favorited ? 'destroy' : 'create';
+		tweet.favorited = !tweet.favorited;
 
 		client.favorites(type, { id: tweet.id_str }, angular.noop);
 	}
