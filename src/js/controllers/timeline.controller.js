@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', '$uibModal', 'Twitter', 'hotkeys', '$sce', function($scope, $interval, $uibModal, Twitter, hotkeys, $sce) {
+.controller('TimelineController', ['$scope', '$interval', 'Twitter','$sce', 'Modal', function($scope, $interval, Twitter, $sce, Modal) {
 	const client = new Twitter();
 
 	$scope.tweets = [];
@@ -8,19 +8,11 @@ angular
 	$scope.startStream = startStream;
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
-	$scope.showReplyModal = showReplyModal;
 
 	function _initialize() {
 		$scope.tweets = [];
-
 		$scope.getTweets();
 		$scope.startStream();
-
-		hotkeys.add({
-			combo: 'n',
-			description: 'new tweet',
-			callback: showNewTweetModal
-		});
 	}
 
   function _detectLinks(tweet) {
@@ -43,7 +35,6 @@ angular
 			}
 
 			$scope.tweets = data;
-
 			$scope.$apply();
 		});
 	}
@@ -67,44 +58,12 @@ angular
 	function favorite(tweet) {
 		type = tweet.favorited ? 'destroy' : 'create';
 		tweet.favorited = !tweet.favorited;
-
 		client.favorites(type, { id: tweet.id_str }, angular.noop);
 	}
 
 	function reply(replyObject) {
 		client.statuses('update', replyObject, angular.noop);
 	}
-
-	function showReplyModal(tweet) {
-		var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'views/modals/reply.html',
-      controller: 'ReplyModalController',
-			resolve: {
-				tweet: () => tweet
-			}
-    });
-
-    modalInstance
-    .result
-    .then(function(replyObject) {
-			client.statuses('update', replyObject, angular.noop);
-		}, angular.noop);
-  }
-
-  function showNewTweetModal(tweet) {
-		var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'views/modals/new-tweet.html',
-      controller: 'NewTweetModalController'
-    });
-
-    modalInstance
-    .result
-    .then(function(newTweet) {
-			client.statuses('update', newTweet, angular.noop);
-		}, angular.noop);
-  }
 
 	_initialize();
 }]);
