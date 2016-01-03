@@ -15,7 +15,7 @@
     "test": "xo",
     "start": "electron .",
     "devbuild": "rm -rf build && gulp",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=$npm_package_electronVersion",
+    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^(/dist|/src|/bower_components)$' --prune --asar --all --version=$npm_package_electronVersion",
     "dependencies" : "npm install -g bower gulp && npm install && bower install"
   },
   "files": [

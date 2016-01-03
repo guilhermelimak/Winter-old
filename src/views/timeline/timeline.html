@@ -27,11 +27,18 @@
 				<p ng-if="tweet.retweeted_status" ng-bind-html="tweet.retweeted_status.text"></p>
 				<p ng-if="!tweet.retweeted_status" ng-bind-html="tweet.text"></p>
 
-				<div class="text-right">
+				<div ng-if="!tweet.retweeted_status" class="text-right">
 					<a class="fa fa-retweet" ng-click="retweet(tweet)"> {{ tweet.retweet_count }}</a>
 					<a class="fa fa-star" ng-click="favorite(tweet)"> {{ tweet.favorite_count }}</a>
 					<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
 				</div>
+
+				<div ng-if="tweet.retweeted_status" class="text-right">
+					<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status)"> {{ tweet.retweeted_status.retweet_count }}</a>
+					<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"> {{ tweet.retweeted_status.favorite_count }}</a>
+					<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
+				</div>
+
 		  </div>
 		</div>
 	</li>
