@@ -1,6 +1,6 @@
 angular
 .module('winter')
-.controller('TimelineController', ['$scope', '$interval', 'Twitter','$sce', 'Modal', function($scope, $interval, Twitter, $sce, Modal) {
+.controller('TimelineController', ['$scope', '$interval', 'Twitter','$sce', 'Modal', 'HotkeyRegistry', function($scope, $interval, Twitter, $sce, Modal, HotkeyRegistry) {
 	const client = new Twitter();
 
 	$scope.tweets = [];
@@ -10,6 +10,8 @@ angular
 	$scope.favorite = favorite;
 
 	function _initialize() {
+		new HotkeyRegistry();
+
 		$scope.tweets = [];
 		$scope.getTweets();
 		$scope.startStream();
