@@ -5,9 +5,9 @@
 
   angular
   .module('winter')
-  .controller('MainController', (Twitter, $location) => new MainController(Twitter, $location));
+  .controller('LoginController', (Twitter, $location) => new LoginController(Twitter, $location));
 
-  class MainController {
+  class LoginController {
     constructor(Twitter, $location) {
       var accessTokenObject = window.localStorage.getItem('accessTokenObject');
 

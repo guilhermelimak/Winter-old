@@ -4,8 +4,8 @@
   .config(($routeProvider) => {
     $routeProvider
     .when('/', {
-      templateUrl: 'views/main/main.html',
-      controller: 'MainController as main'
+      templateUrl: 'views/login/login.html',
+      controller: 'LoginController as main'
     })
     .when('/timeline', {
       templateUrl: 'views/timeline/timeline.html',
