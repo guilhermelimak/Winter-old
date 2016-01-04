@@ -9,7 +9,7 @@
 		</div>
 
 		<ul class="list-group" style="padding: 1em;">
-			<li class="list-group-item" ng-repeat="tweet in tweets">
+			<li class="list-group-item tweet" ng-repeat="tweet in tweets">
 				<div class="text-right" ng-if="tweet.retweeted_status">
 					<small> <i class="fa fa-retweet"></i> Retweeted by @{{ tweet.user.screen_name }}</small>
 				</div>
