@@ -1,17 +1,18 @@
 <div class="modal-body profile-modal">
-<button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-    <div ng-if="!user" class="text-center" style="margin: 1em;">
-      <i class="fa fa-2x fa-spin fa-circle-o-notch"></i>
-    </div>
-    <div class="text-center">
-          <img class="profile-picture-modal" ng-click="showPictureModal(original_profile_image)" src="{{ bigger_profile_image }}">
-          <h4>{{ user.name }}</h4>
-          <h5>@{{ user.screen_name }}</h5>
-          <h6>{{ user.description }}</h6>
-          <ul class="list-inline">
-            <li>Tweets: {{user.statuses_count}}</li>
-            <li>Followers: {{user.followers_count}}</li>
-            <li>Following: {{user.friends_count}}</li>
-          </ul>
-    </div>
+  <div ng-if="!user" class="text-center" style="margin: 1em;">
+    <i class="fa fa-2x fa-spin fa-circle-o-notch"></i>
+  </div>
+  <div class="text-center">
+        <img class="profile-picture-modal" ng-click="showPictureModal(original_profile_image)" src="{{ bigger_profile_image }}">
+        <h4>{{ user.name }}</h4>
+        <h5>@{{ user.screen_name }}</h5>
+        <h6>{{ user.description }}</h6>
+        <ul class="list-inline">
+          <li>Tweets: {{user.statuses_count}}</li>
+          <li>Followers: {{user.followers_count}}</li>
+          <li>Following: {{user.friends_count}}</li>
+        </ul>
+  </div>
+</div>
