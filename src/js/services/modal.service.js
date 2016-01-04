@@ -32,6 +32,16 @@ angular
 			.then(function(newTweet) {
 				client.statuses('update', newTweet, angular.noop);
 			}, angular.noop);
+		},
+		showProfileModal(tweet) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'views/modals/profile.html',
+				controller: 'ProfileModalController',
+				resolve: {
+					tweet: () => tweet
+				}
+			});
 		}
 	}
 }]);

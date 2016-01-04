@@ -30,9 +30,9 @@
 						</a>
 					</div>
 					<div class="media-body" style="word-break: break-all">
-						<h4 ng-if="tweet.retweeted_status" class="media-heading">{{ tweet.retweeted_status.user.name }} <small>@{{ tweet.retweeted_status.user.screen_name }}</small></h4>
+						<h4  ng-click="showProfileModal(tweet)" ng-if="tweet.retweeted_status" class="media-heading">{{ tweet.retweeted_status.user.name }} <small>@{{ tweet.retweeted_status.user.screen_name }}</small></h4>
 
-						<h4 ng-if="!tweet.retweeted_status" class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+						<h4  ng-click="showProfileModal(tweet)" ng-if="!tweet.retweeted_status" class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
 
 						<p ng-if="tweet.retweeted_status" ng-bind-html="tweet.retweeted_status.text"></p>
 						<p ng-if="!tweet.retweeted_status" ng-bind-html="tweet.text"></p>

@@ -28,6 +28,7 @@ const src = {
     './src/js/controllers/login.controller.js',
     './src/js/controllers/timeline.controller.js',
     './src/js/controllers/reply.modal.controller.js',
+    './src/js/controllers/profile.modal.controller.js',
     './src/js/controllers/new-tweet.modal.controller.js',
     './src/js/controllers/navbar.controller.js'
   ],

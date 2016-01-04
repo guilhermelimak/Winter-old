@@ -9,6 +9,7 @@ angular
 	$scope.retweet = retweet;
 	$scope.favorite = favorite;
 	$scope.showReplyModal = Modal.showReplyModal;
+	$scope.showProfileModal = Modal.showProfileModal;
 
 	function _initialize() {
 		new HotkeyRegistry();

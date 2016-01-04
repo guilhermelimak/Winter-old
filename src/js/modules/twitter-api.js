@@ -73,6 +73,20 @@ module.exports = function(accessTokenObject) {
         }
       );
     },
+    users(type, params, callback) {
+      twitter.users(type, params,
+        accessTokenObject.accessToken,
+        accessTokenObject.accessTokenSecret,
+        (error, data, response) => {
+          if (error) {
+            errorCallback(error);
+            return;
+          }
+
+          return callback(data, response);
+        }
+      );
+    },
     getRequestToken: twitter.getRequestToken.bind(twitter),
     getAccessToken: twitter.getAccessToken.bind(twitter),
     verifyCredentials: twitter.verifyCredentials.bind(twitter),
