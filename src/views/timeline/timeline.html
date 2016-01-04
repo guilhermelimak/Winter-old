@@ -38,14 +38,12 @@
 						<p ng-if="!tweet.retweeted_status" ng-bind-html="tweet.text"></p>
 
 						<div ng-repeat="media in tweet.entities.media">
-							<a
-								ng-href="{{ media.media_url_https }}"
-								target="_blank">
+
 								<img
+									ng-click="showPictureModal(media.media_url_https)"
 									ng-if="media.type == 'photo'"
 									ng-src="{{ media.media_url_https }}"
 									width="100%">
-							</a>
 						</div>
 
 						<div ng-if="!tweet.retweeted_status" class="text-right">

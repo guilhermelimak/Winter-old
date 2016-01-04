@@ -10,6 +10,8 @@ angular
 	$scope.favorite = favorite;
 	$scope.showReplyModal = Modal.showReplyModal;
 	$scope.showProfileModal = Modal.showProfileModal;
+	$scope.showPictureModal = Modal.showPictureModal;
+	
 
 	function _initialize() {
 		new HotkeyRegistry();
