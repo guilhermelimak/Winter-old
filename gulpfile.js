@@ -30,6 +30,7 @@ const src = {
     './src/js/controllers/reply.modal.controller.js',
     './src/js/controllers/profile.modal.controller.js',
     './src/js/controllers/new-tweet.modal.controller.js',
+    './src/js/controllers/picture.modal.controller.js',
     './src/js/controllers/navbar.controller.js'
   ],
   fonts: './bower_components/font-awesome/fonts/**'

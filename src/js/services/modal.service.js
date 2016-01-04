@@ -42,6 +42,16 @@ angular
 					tweet: () => tweet
 				}
 			});
-		}
+		},
+		showPictureModal(imgLink) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'views/modals/picture.html',
+				controller: 'PictureModalController',
+				resolve: {
+					imgLink: () => imgLink
+				}
+			});
+		},
 	}
 }]);
