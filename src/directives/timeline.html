@@ -1,0 +1,71 @@
+<div class="col-sm-6">
+	<div class="panel panel-default" style="margin: 1em;">
+		<header class="panel-heading" style="position: sticky; top: 0;">
+			<i class="fa fa-clock-o"></i> <b>Timeline</b>
+		</header>
+
+		<div ng-if="!tweets.length" class="text-center" style="margin: 1em;">
+			<i class="fa fa-2x fa-spin fa-circle-o-notch"></i>
+		</div>
+
+		<ul class="list-group" style="padding: 1em;">
+			<li class="list-group-item" ng-repeat="tweet in tweets">
+				<div class="text-right" ng-if="tweet.retweeted_status">
+					<small> <i class="fa fa-retweet"></i> Retweeted by @{{ tweet.user.screen_name }}</small>
+				</div>
+
+				<div class="media">
+					<div class="media-left">
+						<a>
+							<img
+								class="media-object"
+								ng-if="tweet.retweeted_status"
+								alt="{{ tweet.retweeted_status.user.name }}"
+								src="{{ tweet.retweeted_status.user.profile_image_url }}">
+							<img
+								class="media-object"
+								ng-if="!tweet.retweeted_status"
+								alt="{{ tweet.user.name }}"
+								src="{{ tweet.user.profile_image_url }}">
+						</a>
+					</div>
+					<div class="media-body" style="word-break: break-all">
+						<h4 ng-if="tweet.retweeted_status" class="media-heading">{{ tweet.retweeted_status.user.name }} <small>@{{ tweet.retweeted_status.user.screen_name }}</small></h4>
+
+						<h4 ng-if="!tweet.retweeted_status" class="media-heading">{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small></h4>
+
+						<p ng-if="tweet.retweeted_status" ng-bind-html="tweet.retweeted_status.text"></p>
+						<p ng-if="!tweet.retweeted_status" ng-bind-html="tweet.text"></p>
+
+						<div ng-repeat="media in tweet.entities.media">
+							<a
+								ng-href="{{ media.media_url_https }}"
+								target="_blank">
+								<img
+									ng-if="media.type == 'photo'"
+									ng-src="{{ media.media_url_https }}"
+									width="100%">
+							</a>
+						</div>
+
+						<div ng-if="!tweet.retweeted_status" class="text-right">
+							<a class="fa fa-retweet" ng-click="retweet(tweet)"></a>
+							<span class="badge">{{ tweet.retweet_count }}</span>
+							<a class="fa fa-star" ng-click="favorite(tweet)"></a>
+							<span class="badge">{{ tweet.favorite_count }}</span>
+							<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
+						</div>
+
+						<div ng-if="tweet.retweeted_status" class="text-right">
+							<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status)"></a>
+							<span class="badge">{{ tweet.retweeted_status.retweet_count }}</span>
+							<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"></a>
+							<span class="badge">{{ tweet.retweeted_status.favorite_count }}</span>
+							<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

@@ -8,9 +8,8 @@
       controller: 'LoginController as main'
     })
     .when('/timeline', {
-      templateUrl: 'views/timeline/timeline.html',
-      controller: 'TimelineController',
-      controllerAs: 'timeline'
+      templateUrl: 'views/dashboard/dashboard.html',
+      controller: 'DashboardController as dashboard'
     })
     .otherwise('/');
   });
