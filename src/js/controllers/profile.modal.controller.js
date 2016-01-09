@@ -1,31 +1,31 @@
-'use strict';
-angular
-.module('winter')
-.controller('ProfileModalController', ($scope, $uibModalInstance, Twitter, tweet, Modal) => {
-	const client = new Twitter();
-	$scope.showPictureModal = Modal.showPictureModal;
+(() => {
+	'use strict';
 
-	function getImageSizes() {
-		$scope.bigger_profile_image = $scope.user.profile_image_url.replace("_normal", "_bigger")
-		$scope.original_profile_image = $scope.user.profile_image_url.replace("_normal", "")
-	}
+	angular
+	.module('winter')
+	.controller('ProfileModalController', ($scope, $uibModalInstance, Twitter, tweet, Modal) => {
+		const client = new Twitter();
 
-	function getUser(tweet) {
-		client.users('show', {user_id: tweet.user.id_str}, (data, response) => {
-			$scope.user = data 
-			$scope.$apply();
-			getImageSizes()
-		});
-	}
+		$scope.user = tweet.user;
+		$scope.showPictureModal = Modal.showPictureModal;
 
-  $scope.ok = () => {
-    $uibModalInstance.close();
-  };
-  
-  $scope.cancel = () => {
-    $uibModalInstance.dismiss('cancel');
-  };
+	  $scope.ok = () => {
+	    $uibModalInstance.close();
+	  };
 
-  getUser(tweet);
-});
-	
+	  $scope.cancel = () => {
+	    $uibModalInstance.dismiss('cancel');
+	  };
+
+		function _init() {
+			_getImageSizes();
+		}
+
+		function _getImageSizes() {
+			$scope.bigger_profile_image = $scope.user.profile_image_url.replace("_normal", "_bigger")
+			$scope.original_profile_image = $scope.user.profile_image_url.replace("_normal", "")
+		}
+
+		_init();
+	});
+})();

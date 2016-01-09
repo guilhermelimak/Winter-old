@@ -1,3 +1,7 @@
-.profile-picture-modal {
+.profile-modal {
 	margin-bottom: 1em;
+
+	&__picture {
+		cursor: pointer;
+	}
 }

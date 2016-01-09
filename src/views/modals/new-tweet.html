@@ -1,18 +1,40 @@
 <div class="modal-header">
-  <h3 class="modal-title">New tweet</h3>
+  <h3 class="modal-title">
+    <i class="fa fa-pencil-square"></i>
+    New tweet
+  </h3>
 </div>
+
 <div class="modal-body">
   <div>
-    <h4 class="media-heading">{{ tweet.user.name }} <small>{{ tweet.user.screen_name }}</small></h4>
+    <h4 class="media-heading">
+      {{ tweet.user.name }}
+      <small>{{ tweet.user.screen_name }}</small>
+    </h4>
     {{ tweet.text }}
   </div>
-  <textarea 
+
+  <textarea
     rows="5"
     cols="60"
+    class="form-group"
     ng-model="newTweet.status"
-    autofocus></textarea>
+    autofocus>
+  </textarea>
 </div>
+
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="ok()">Tweet</button>
-  <button class="btn" type="button" ng-click="cancel()">Cancel</button>
+  <button
+    class="btn btn-primary"
+    type="button"
+    ng-click="ok()">
+    Tweet
+  </button>
+
+  <button
+    class="btn"
+    type="button"
+    ng-click="cancel()">
+    Cancel
+  </button>
 </div>

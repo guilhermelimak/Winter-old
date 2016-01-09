@@ -1,11 +1,13 @@
-angular
-.module('winter')
-.factory('Modal', ['Twitter', '$uibModal', function(Twitter, $uibModal) {
-	const client = new Twitter();
+(() => {
+  'use strict';
 
-	return {
-		showReplyModal(tweet) {
-			var modalInstance = $uibModal.open({
+	angular
+	.module('winter')
+	.factory('Modal', ['Twitter', '$uibModal', (Twitter, $uibModal) => {
+		const client = new Twitter();
+
+		function showReplyModal(tweet) {
+			let modalInstance = $uibModal.open({
 				animation: true,
 				templateUrl: 'views/modals/reply.html',
 				controller: 'ReplyModalController',
@@ -16,12 +18,11 @@ angular
 
 			modalInstance
 			.result
-			.then(function(replyObject) {
-				client.statuses('update', replyObject, angular.noop);
-			}, angular.noop);
-		},
-		showNewTweetModal() {
-			var modalInstance = $uibModal.open({
+			.then((replyObject) => client.statuses('update', replyObject, angular.noop), angular.noop);
+		}
+
+		function showNewTweetModal() {
+			let modalInstance = $uibModal.open({
 				animation: true,
 				templateUrl: 'views/modals/new-tweet.html',
 				controller: 'NewTweetModalController'
@@ -29,12 +30,11 @@ angular
 
 			modalInstance
 			.result
-			.then(function(newTweet) {
-				client.statuses('update', newTweet, angular.noop);
-			}, angular.noop);
-		},
-		showProfileModal(tweet) {
-			var modalInstance = $uibModal.open({
+			.then((newTweet) => client.statuses('update', newTweet, angular.noop), angular.noop);
+		}
+
+		function showProfileModal(tweet) {
+			$uibModal.open({
 				animation: true,
 				templateUrl: 'views/modals/profile.html',
 				controller: 'ProfileModalController',
@@ -42,9 +42,10 @@ angular
 					tweet: () => tweet
 				}
 			});
-		},
-		showPictureModal(imgLink) {
-			var modalInstance = $uibModal.open({
+		}
+
+		function showPictureModal(imgLink) {
+			$uibModal.open({
 				animation: true,
 				templateUrl: 'views/modals/picture.html',
 				controller: 'PictureModalController',
@@ -52,6 +53,13 @@ angular
 					imgLink: () => imgLink
 				}
 			});
-		},
-	}
-}]);
+		}
+
+		return {
+			showReplyModal: showReplyModal,
+			showNewTweetModal: showNewTweetModal,
+			showProfileModal: showProfileModal,
+			showPictureModal: showPictureModal
+		};
+	}]);
+})();

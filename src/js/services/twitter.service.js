@@ -5,7 +5,7 @@
   .module('winter')
   .factory('Twitter', () => {
     return function() {
-      var accessTokenObject =  JSON.parse(window.localStorage.getItem('accessTokenObject'));
+      var accessTokenObject = JSON.parse(window.localStorage.getItem('accessTokenObject'));
 
       return TwitterApi(accessTokenObject);
     }

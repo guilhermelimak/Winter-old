@@ -1,9 +1,11 @@
-angular
-.module('winter')
-.controller('navbarController', ['$scope', '$location', function($scope, $location) {
+(() => {
+	'use strict';
 
-	$scope.goHome = function() {
-		$location.url('/timeline')
-	};
-
-}]);
+	angular
+	.module('winter')
+	.controller('navbarController', ['$scope', '$location', ($scope, $location) => {
+		$scope.goHome = function() {
+			$location.url('/timeline')
+		};
+	}]);
+})();
