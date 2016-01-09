@@ -51,12 +51,6 @@
 
 				$scope.tweets = data;
 				$scope.$apply();
-
-				client.statuses("show", { id: "685815767217078272" }, (data, response) => {
-					console.log(data);
-					$scope.tweets.unshift(_detectLinks(data));
-					$scope.$apply();
-				});
 			});
 		}
 
