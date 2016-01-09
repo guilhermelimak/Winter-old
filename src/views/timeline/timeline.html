@@ -18,6 +18,7 @@
 			style="padding: 1em;">
 			<li
 				class="tweet list-group-item"
+				ng-click="logTweet(tweet)"
 				ng-repeat="tweet in tweets">
 				<div
 					class="text-right"
@@ -49,14 +50,16 @@
 						<h4
 							ng-click="showProfileModal(tweet)"
 							ng-if="tweet.retweeted_status" class="media-heading">
-							{{ tweet.retweeted_status.user.name }} <small>@{{ tweet.retweeted_status.user.screen_name }}</small>
+							{{ tweet.retweeted_status.user.name }}
+							<small>@{{ tweet.retweeted_status.user.screen_name }}</small>
 						</h4>
 
 						<h4
 							ng-click="showProfileModal(tweet)"
 							ng-if="!tweet.retweeted_status"
 							class="media-heading">
-							{{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small>
+							{{ tweet.user.name }}
+							<small>@{{ tweet.user.screen_name }}</small>
 						</h4>
 
 						<p
@@ -67,13 +70,12 @@
 							ng-if="!tweet.retweeted_status"
 							ng-bind-html="tweet.text"></p>
 
-						<div ng-repeat="media in tweet.entities.media">
-							<img
-								ng-click="showPictureModal(media.media_url_https)"
-								ng-if="media.type == 'photo'"
-								ng-src="{{ media.media_url_https }}"
-								width="100%">
-						</div>
+						<img
+							ng-click="showPictureModal(media.media_url_https)"
+							ng-if="media.type == 'photo'"
+							ng-src="{{ media.media_url_https }}"
+							ng-repeat="media in tweet.extended_entities.media"
+							width="100%">
 
 						<div
 							ng-if="!tweet.retweeted_status"
