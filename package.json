@@ -15,7 +15,9 @@
     "test": "xo",
     "start": "electron .",
     "devbuild": "rm -rf build && gulp",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^(/dist|/src|/bower_components)$' --prune --asar --all --version=$npm_package_electronVersion",
+    "buildwin": "electron-packager ./build Winter --platform=win32 --arch=x64 --out=win32 --version=0.36.3",
+    "buildlinux": "electron-packager ./build Winter --platform=linux --arch=all --out=linux --version=0.36.3",
+    "build": "electron-packager ./build $npm_package_productName --out=dist --ignore='^(/dist|/src|/bower_components)$' --prune --asar --all --version=$npm_package_electronVersion",
     "dependencies" : "npm install -g bower gulp && npm install && bower install"
   },
   "files": [
