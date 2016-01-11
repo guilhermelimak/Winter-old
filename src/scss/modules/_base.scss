@@ -25,3 +25,7 @@ a {
 .close {
 	color: #FFF;
 }
+
+button {
+	-webkit-app-region: no-drag;
+}
