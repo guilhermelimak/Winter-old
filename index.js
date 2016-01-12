@@ -18,7 +18,6 @@ function createMainWindow() {
 		width: 300,
 		height: 300,
 		frame: false
-		// resizable: false
 	});
 	win.setMenu(null);
 	win.loadURL(`file://${__dirname}/build/index.html`);
@@ -34,9 +33,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
+	mainWindow = mainWindow || createMainWindow();
 });
 
 app.on('ready', () => {

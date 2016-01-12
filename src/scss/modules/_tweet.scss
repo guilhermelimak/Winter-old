@@ -7,4 +7,10 @@
 		font-size: 1.3em;
 		cursor: pointer;
 	}
+
+	&--retweeted-by-user {
+		a.fa-retweet {
+			color: #00bb00;
+		}
+	}
 }

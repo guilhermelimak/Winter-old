@@ -3,8 +3,10 @@
 
   angular
   .module('winter')
-  .controller('ReplyModalController', ($scope, $uibModalInstance, tweet) => {
+  .controller('ReplyModalController', ($scope, $uibModalInstance, tweet, Modal) => {
     $scope.tweet = tweet;
+
+    $scope.showProfileModal = Modal.showProfileModal;
 
     $scope.replyObject = {
       in_reply_to_status_id: tweet.id_str,

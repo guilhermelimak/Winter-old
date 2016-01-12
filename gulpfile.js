@@ -21,6 +21,7 @@ const src = {
     './src/js/app.globals.js',
     './src/js/app.module.js',
     './src/js/app.config.js',
+    './src/js/services/user-storage.service.js',
     './src/js/services/twitter.service.js',
     './src/js/services/modal.service.js',
     './src/js/services/hotkey.registry.service.js',
