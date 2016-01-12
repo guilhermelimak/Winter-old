@@ -30,15 +30,23 @@
 
 	  function _detectLinks(tweet) {
 			let urlPattern = '<a onclick="openUrl(\'$1\')">$1</a>'
-			,		regex = /((http|https):\/\/[^\s]+)/gi;
+			,		regex = /((http|https):\/\/[^\s]+)/gi
+			,		_modifyTweet = (tweet) => {
+				try {
+					if (tweet.retweeted_status) {
+						tweet.retweeted_status.text = tweet.retweeted_status.text.replace(regex, urlPattern);
+						tweet.retweeted_status.text = $sce.trustAsHtml(tweet.retweeted_status.text);
+					} else {
+						tweet.text = tweet.text.replace(regex, urlPattern);
+						tweet.text = $sce.trustAsHtml(tweet.text);
+					}
+				} catch (e) {
+					console.error("Not parseable tweet: ")
+					console.error(tweet);
+				}
+			};
 
-			if (tweet.retweeted_status) {
-				tweet.retweeted_status.text = tweet.retweeted_status.text.replace(regex, urlPattern);
-				tweet.retweeted_status.text = $sce.trustAsHtml(tweet.retweeted_status.text);
-			} else {
-				tweet.text = tweet.text.replace(regex, urlPattern);
-				tweet.text = $sce.trustAsHtml(tweet.text);
-			}
+			_modifyTweet(tweet);
 
 	    return tweet;
 	  }
