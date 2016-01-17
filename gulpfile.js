@@ -23,6 +23,7 @@ const src = {
     './src/js/app.config.js',
     './src/js/services/user-storage.service.js',
     './src/js/services/twitter.service.js',
+    './src/js/services/regex-helper.service.js',
     './src/js/services/modal.service.js',
     './src/js/services/hotkey.registry.service.js',
     './src/js/controllers/login.controller.js',

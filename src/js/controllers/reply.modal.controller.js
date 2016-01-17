@@ -3,14 +3,14 @@
 
   angular
   .module('winter')
-  .controller('ReplyModalController', ($scope, $uibModalInstance, tweet, Modal, hotkeys) => {
+  .controller('ReplyModalController', ($scope, $uibModalInstance, tweet, Modal, hotkeys, RegexHelper) => {
     hotkeys.add({
       combo: 'enter',
       description: 'Submit reply',
       allowIn: ['TEXTAREA'],
       callback: ok
     });
-
+    console.log(RegexHelper.getScreenNames(tweet.text));
     $scope.tweet = tweet;
     $scope.replyObject = {
       in_reply_to_status_id: tweet.id_str,
