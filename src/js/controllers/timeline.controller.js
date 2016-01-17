@@ -105,13 +105,14 @@
 		function _notify(data) {
 			var notification = {
 				title: data.user.screen_name,
-				body: data.text
+				body: data.text,
+				icon: data.user.profile_image_url_https
 			}
 			
 			if (Notification.permission !== "granted") {
 				Notification.requestPermission();
 			} else {
-				new Notification(notification.title, {body:notification.body});
+				new Notification(notification.title, {body:notification.body, icon:notification.icon});
 			}
 		}
 		
