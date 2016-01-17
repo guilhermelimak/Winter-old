@@ -8,7 +8,10 @@
 <ul class="list-group">
 	<li
 		class="tweet list-group-item"
-		ng-class="{ 'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted, 'tweet--favorited-by-user': tweet.favorited }"
+		ng-class="{
+			'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted,
+			'tweet--favorited-by-user': tweet.favorited
+		}"
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
 		<div
@@ -93,8 +96,7 @@
 
 				<div
 					ng-if="!tweet.retweeted_status"
-					class="text-right">
-
+					class="text-left tweet__actions">
 					<a
 						class="fa fa-retweet"
 						ng-if="!tweet.user.protected"
@@ -107,7 +109,7 @@
 
 				<div
 					ng-if="tweet.retweeted_status"
-					class="text-right">
+					class="text-left tweet__actions">
 					<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status, $index)"></a>
 					<span class="badge">{{ tweet.retweeted_status.retweet_count }}</span>
 					<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"></a>

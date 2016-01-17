@@ -1,7 +1,8 @@
 .tweet {
+	word-break: break-word;
+
 	&__text {
 		color: #FFF;
-		word-break: break-all;
 	}
 
 	&__heading {
@@ -16,14 +17,20 @@
 
 	&__media {
 		&--image {
-			margin-bottom: 1em;
 			display: block;
 			max-width: 400px;
+			margin-bottom: 1em;
 		}
 
 		&--gif,
 		&--video {
 			max-width: 100%;
+		}
+	}
+
+	&__actions {
+		> * {
+			padding: 0 1em;
 		}
 	}
 
