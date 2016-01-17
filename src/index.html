@@ -11,7 +11,12 @@
 				<div class="container-fluid">
 					<ul class="nav navbar-nav">
 						<li class="active"><a ng-click="goHome()">Home</a></li>
-						<li> <a ng-click="goMentions()">Mentions</a></li>
+						<button 
+							class="btn btn-primary new-tweet-button text-left pull-right" 
+							ng-click="showNewTweetModal()"
+						>
+							<span class="fa fa-pencil-square-o"></span>
+						</button>
 					</ul>
 				</ul>
 				</div>
