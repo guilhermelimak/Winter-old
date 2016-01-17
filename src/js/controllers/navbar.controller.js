@@ -7,5 +7,10 @@
 		$scope.goHome = function() {
 			$location.url('/timeline')
 		};
+
+		$scope.toggleDevTools = function() {
+			require('remote').getCurrentWindow().toggleDevTools();
+		};
+
 	}]);
 })();
