@@ -8,7 +8,10 @@
 <ul class="list-group">
 	<li
 		class="tweet list-group-item"
-		ng-class="{ 'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted, 'tweet--favorited-by-user': tweet.favorited }"
+		ng-class="{
+			'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted,
+			'tweet--favorited-by-user': tweet.favorited
+		}"
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
 		<div
@@ -56,7 +59,8 @@
 			<div class="media-body">
 				<h4
 					ng-click="showProfileModal(tweet.retweeted_status)"
-					ng-if="tweet.retweeted_status" class="media-heading">
+					ng-if="tweet.retweeted_status"
+					class="media-heading tweet__heading">
 					{{ tweet.retweeted_status.user.name }}
 					<small>@{{ tweet.retweeted_status.user.screen_name }}</small>
 				</h4>
@@ -109,26 +113,44 @@
 
 				<div
 					ng-if="!tweet.retweeted_status"
-					class="text-right">
+					class="text-left tweet__actions">
 
-					<a
-						class="fa fa-retweet"
-						ng-if="!tweet.user.protected"
-						ng-click="retweet(tweet, $index)"></a>
-					<span ng-if="!tweet.user.protected" class="badge">{{ tweet.retweet_count }}</span>
-					<a class="fa fa-star" ng-click="favorite(tweet)"></a>
-					<span class="badge">{{ tweet.favorite_count }}</span>
-					<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
+					<div class="tweet__action">
+						<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
+					</div>
+
+					<div class="tweet__action">
+						<a
+							class="fa fa-retweet"
+							ng-if="!tweet.user.protected"
+							ng-click="retweet(tweet, $index)"></a>
+						<span ng-if="!tweet.user.protected" class="badge">{{ tweet.retweet_count }}</span>
+					</div>
+
+					<div class="tweet__action">
+						<a class="fa fa-star" ng-click="favorite(tweet)"></a>
+						<span class="badge">{{ tweet.favorite_count }}</span>
+					</div>
 				</div>
 
 				<div
 					ng-if="tweet.retweeted_status"
-					class="text-right">
-					<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status, $index)"></a>
-					<span class="badge">{{ tweet.retweeted_status.retweet_count }}</span>
-					<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"></a>
-					<span class="badge">{{ tweet.retweeted_status.favorite_count }}</span>
-					<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
+					class="text-left tweet__actions">
+
+					<div class="tweet__action">
+						<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
+					</div>
+
+					<div class="tweet__action">
+						<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status, $index)"></a>
+						<span class="badge">{{ tweet.retweeted_status.retweet_count }}</span>
+					</div>
+
+					<div class="tweet__action">
+						<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"></a>
+						<span class="badge">{{ tweet.retweeted_status.favorite_count }}</span>
+					</div>
+
 				</div>
 			</div>
 		</div>
