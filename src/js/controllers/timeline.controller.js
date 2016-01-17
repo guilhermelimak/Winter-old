@@ -103,13 +103,18 @@
 		}
 
 		function _notify(data) {
+			var notification = {
+				title: data.user.screen_name,
+				body: data.text
+			}
+			
 			if (Notification.permission !== "granted") {
 				Notification.requestPermission();
 			} else {
-				new Notification(`Mention: ${data.text}`);
+				new Notification(notification.title, {body:notification.body});
 			}
 		}
-
+		
 		function _toggleRetweet(index, data) {
 			if (!data) {
 				$scope.tweets[index].retweet_count--;
