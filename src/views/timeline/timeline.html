@@ -8,7 +8,7 @@
 <ul class="list-group">
 	<li
 		class="tweet list-group-item"
-		ng-class="{ 'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted }"
+		ng-class="{ 'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted, 'tweet--favorited-by-user': tweet.favorited }"
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
 		<div
@@ -27,13 +27,13 @@
 						ng-if="tweet.retweeted_status"
 						ng-click="showProfileModal(tweet.retweeted_status)"
 						alt="{{ tweet.retweeted_status.user.name }}"
-						src="{{ tweet.retweeted_status.user.profile_image_url }}">
+						ng-src="{{ tweet.retweeted_status.user.profile_image_url }}">
 					<img
 						class="media-object"
 						ng-if="!tweet.retweeted_status"
 						ng-click="showProfileModal(tweet)"
 						alt="{{ tweet.user.name }}"
-						src="{{ tweet.user.profile_image_url }}">
+						ng-src="{{ tweet.user.profile_image_url }}">
 				</a>
 			</div>
 
@@ -63,18 +63,42 @@
 					ng-if="!tweet.retweeted_status"
 					ng-bind-html="tweet.text"></p>
 
-				<img
-					ng-click="showPictureModal(media.media_url_https)"
-					ng-if="media.type == 'photo'"
-					ng-src="{{ media.media_url_https }}"
-					ng-repeat="media in tweet.extended_entities.media"
-					width="100%">
+				<div ng-repeat="media in tweet.extended_entities.media">
+					<img
+						ng-click="showPictureModal(media.media_url_https)"
+						ng-if="media.type == 'photo'"
+						ng-src="{{ media.media_url_https }}"
+						width="100%">
+
+					<video
+						controls="true"
+						type="video/mp4"
+						ng-if="media.type == 'video'"
+						class="tweet--video"
+						ng-src="{{ media.video_info.variants[0].url }}">
+					</video>
+
+					<video
+						autoplay="autoplay"
+						loop="loop"
+						type="video/mp4"
+						style="width: {{ media.sizes.medium.w }}px"
+						ng-if="media.type == 'animated_gif'"
+						class="tweet--gif"
+						ng-src="{{ media.video_info.variants[0].url }}">
+					</video>
+				</div>
+
 
 				<div
 					ng-if="!tweet.retweeted_status"
 					class="text-right">
-					<a class="fa fa-retweet" ng-click="retweet(tweet, $index)"></a>
-					<span class="badge">{{ tweet.retweet_count }}</span>
+
+					<a
+						class="fa fa-retweet"
+						ng-if="!tweet.user.protected"
+						ng-click="retweet(tweet, $index)"></a>
+					<span ng-if="!tweet.user.protected" class="badge">{{ tweet.retweet_count }}</span>
 					<a class="fa fa-star" ng-click="favorite(tweet)"></a>
 					<span class="badge">{{ tweet.favorite_count }}</span>
 					<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
