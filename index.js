@@ -6,6 +6,11 @@ const app = electron.app;
 // report crashes to the Electron project
 require('crash-reporter').start();
 
+require('electron-debug')({
+    showDevTools: true
+});
+
+
 let mainWindow;
 
 function onClosed() {
@@ -15,10 +20,11 @@ function onClosed() {
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
 		width: 500,
-		height: 700,
-		frame: false
+		height: 700
 	});
+
 	win.setMenu(null);
+
 	win.loadURL(`file://${__dirname}/build/index.html`);
 	win.on('closed', onClosed);
 
