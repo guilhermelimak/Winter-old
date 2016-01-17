@@ -12,9 +12,9 @@ body {
 body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
 	padding-top: $navbar-height;
-	
+
 	> section {
-		padding: 0 !important; 
+		padding: 0 !important;
 	}
 }
 
@@ -35,5 +35,5 @@ button {
 }
 
 .modal-open {
-    overflow: scroll;
+    overflow-y: scroll;
 }

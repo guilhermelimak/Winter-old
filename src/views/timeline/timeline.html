@@ -23,13 +23,13 @@
 			<div class="media-left">
 				<a>
 					<img
-						class="media-object"
+						class="media-object tweet__avatar"
 						ng-if="tweet.retweeted_status"
 						ng-click="showProfileModal(tweet.retweeted_status)"
 						alt="{{ tweet.retweeted_status.user.name }}"
 						ng-src="{{ tweet.retweeted_status.user.profile_image_url }}">
 					<img
-						class="media-object"
+						class="media-object tweet__avatar"
 						ng-if="!tweet.retweeted_status"
 						ng-click="showProfileModal(tweet)"
 						alt="{{ tweet.user.name }}"
@@ -48,7 +48,7 @@
 				<h4
 					ng-click="showProfileModal(tweet)"
 					ng-if="!tweet.retweeted_status"
-					class="media-heading">
+					class="media-heading tweet__heading">
 					{{ tweet.user.name }}
 					<small>@{{ tweet.user.screen_name }}</small>
 				</h4>
@@ -65,6 +65,7 @@
 
 				<div ng-repeat="media in tweet.extended_entities.media">
 					<img
+						class="tweet__media--image"
 						ng-click="showPictureModal(media.media_url_https)"
 						ng-if="media.type == 'photo'"
 						ng-src="{{ media.media_url_https }}"
@@ -74,7 +75,7 @@
 						controls="true"
 						type="video/mp4"
 						ng-if="media.type == 'video'"
-						class="tweet--video"
+						class="tweet__media--video"
 						ng-src="{{ media.video_info.variants[0].url }}">
 					</video>
 
@@ -84,7 +85,7 @@
 						type="video/mp4"
 						style="width: {{ media.sizes.medium.w }}px"
 						ng-if="media.type == 'animated_gif'"
-						class="tweet--gif"
+						class="tweet__media--gif"
 						ng-src="{{ media.video_info.variants[0].url }}">
 					</video>
 				</div>
