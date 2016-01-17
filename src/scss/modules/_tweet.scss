@@ -13,6 +13,10 @@
 		cursor: pointer;
 	}
 
+	> .media-body {
+		word-break: break-all;
+	}
+
 	&__text {
 		color: #FFF;
 	}
@@ -23,7 +27,14 @@
 		}
 	}
 
-	> .media-body {
-		word-break: break-all;
+	&--favorited-by-user {
+		a.fa-star {
+			color: yellow;
+		}
+	}
+
+	&--gif,
+	&--video {
+		max-width: 100%;
 	}
 }
