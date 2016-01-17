@@ -55,11 +55,21 @@
 			});
 		}
 
+    function showProfileModalByScreenName(screenName) {
+      if (!screenName)
+        return;
+
+      client.users("show", { screen_name: screenName }, (data, response) => {
+        console.log(`${screenName}: `, data);
+      });
+    }
+
 		return {
 			showReplyModal: showReplyModal,
 			showNewTweetModal: showNewTweetModal,
 			showProfileModal: showProfileModal,
-			showPictureModal: showPictureModal
+			showPictureModal: showPictureModal,
+      showProfileModalByScreenName: showProfileModalByScreenName
 		};
 	}]);
 })();

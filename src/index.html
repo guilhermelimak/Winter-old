@@ -7,15 +7,26 @@
 	</head>
 	<body>
 		<section class="container-fluid">
-			<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" ng-controller="navbarController">
+			<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="navbarController">
 				<div class="container-fluid">
 					<div class="navbar-header">
-					
-						<ul class="nav navbar-nav">
-							<li class="active"><a ng-click="goHome()">Home</a></li>
-							<li> <a href="#">Mentions</a></li>
-						</ul>
+						<a href="#" class="navbar-brand">Winter</a>
 					</div>
+
+					<ul class="nav navbar-nav navbar-left">
+						<li class="active"><a ng-click="goHome()">Home</a></li>
+						<li> <a href="#">Mentions</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<button
+							ng-click="showNewTweetModal()"
+							class="btn btn-primary">
+							<i class="fa fa-twitter"></i>
+						</button>
+					</li>
+				</ul>
 				</div>
 			</nav>
 

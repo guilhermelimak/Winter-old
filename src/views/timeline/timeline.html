@@ -13,9 +13,7 @@
 			<i class="fa fa-2x fa-spin fa-circle-o-notch"></i>
 		</div>
 
-		<ul
-			class="list-group"
-			style="padding: 1em;">
+		<ul class="list-group">
 			<li
 				class="tweet list-group-item"
 				ng-class="{ 'tweet--retweeted-by-user' : tweet.retweeted_by_user || tweet.retweeted }"
@@ -35,11 +33,13 @@
 							<img
 								class="media-object"
 								ng-if="tweet.retweeted_status"
+								ng-click="showProfileModal(tweet.retweeted_status)"
 								alt="{{ tweet.retweeted_status.user.name }}"
 								src="{{ tweet.retweeted_status.user.profile_image_url }}">
 							<img
 								class="media-object"
 								ng-if="!tweet.retweeted_status"
+								ng-click="showProfileModal(tweet)"
 								alt="{{ tweet.user.name }}"
 								src="{{ tweet.user.profile_image_url }}">
 						</a>
@@ -49,7 +49,7 @@
 						class="media-body"
 						style="word-break: break-all">
 						<h4
-							ng-click="showProfileModal(tweet)"
+							ng-click="showProfileModal(tweet.retweeted_status)"
 							ng-if="tweet.retweeted_status" class="media-heading">
 							{{ tweet.retweeted_status.user.name }}
 							<small>@{{ tweet.retweeted_status.user.screen_name }}</small>
@@ -64,10 +64,12 @@
 						</h4>
 
 						<p
+							class="tweet__text"
 							ng-if="tweet.retweeted_status"
 							ng-bind-html="tweet.retweeted_status.text"></p>
 
 						<p
+							class="tweet__text"
 							ng-if="!tweet.retweeted_status"
 							ng-bind-html="tweet.text"></p>
 

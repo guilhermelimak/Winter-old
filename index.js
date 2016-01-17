@@ -5,7 +5,6 @@ const app = electron.app;
 
 // report crashes to the Electron project
 require('crash-reporter').start();
-require('electron-debug')();
 
 let mainWindow;
 

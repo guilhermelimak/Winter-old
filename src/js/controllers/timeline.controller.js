@@ -10,13 +10,14 @@
 
 		$scope.user = UserStorage.user;
 
-		$scope.logTweet = (tweet) => console.log(tweet);
+		$scope.logTweet = (tweet) => false ? angular.noop : console.log(tweet);
 
 		$scope.retweet = retweet;
 		$scope.favorite = favorite;
 		$scope.showReplyModal = Modal.showReplyModal;
 		$scope.showProfileModal = Modal.showProfileModal;
 		$scope.showPictureModal = Modal.showPictureModal;
+		$scope.showProfileModalByScreenName = Modal.showProfileModalByScreenName;
 
 		const regex = {
 			mention: /((@)[^\s]+)/ig,
@@ -25,7 +26,7 @@
 
 		const patterns = {
 			url: '<a onclick="openUrl(\'$1\')">$1</a>',
-			mention: '<a onclick="openUrl(\'https://twitter.com/$1\')">$1</a>'
+			mention: '<a ng-click="showProfileModalByScreenName(\'$1\')">$1</a>'
 		};
 
 		function _initialize() {
@@ -37,37 +38,26 @@
 
 		function getTweets() {
 			client.getTimeline('home', (data, response) => {
-				$scope.tweets = data.map(_detectLinks);
+				var retweets = data.filter(_wasRetweetedByUser);
+
+				for (var i = retweets.length; i--;) {
+					client.statuses("retweets", { id: retweets[i].id_str }, (originalTweet, response) => {
+						console.log(data, originalTweet);
+					});
+				}
+
+ 				$scope.tweets = data.map(_detectLinks);
 				$scope.$apply();
 			});
 		}
 
 		function startStream() {
 			client.getStream('user', { "with": "followings" }, (data, response) => {
-				var wasRetweetedByUser = _wasRetweetedByUser(data)
-				,		hasKeys = Object.keys(data).length != 0;
+				if (_receivedReply(data)) _notify(data);
 
-				if (_receivedReply(data)) {
-					_notify(data);
-				}
-
-				if (wasRetweetedByUser) {
-					data.retweeted_by_user = true;
-
-					client.statuses("show", { id: data.id_str }, (data, response) => {
-						console.log(data, response);
-					});
-				}
-
-				if (data.friends == undefined &&
-						data.created_at !== undefined &&
-						hasKeys &&
-						!data.retweeted_by_user) {
-					console.log(data, 'added');
+				if (_isTweet(data) && !(data.retweeted_by_user = _wasRetweetedByUser(data))) {
 					$scope.tweets.unshift(_detectLinks(data));
 					$scope.$apply();
-				} else {
-					console.log(data, wasRetweetedByUser ? 'retweet not added' : 'not added');
 				}
 			});
 		}
@@ -152,6 +142,20 @@
 			}
 
 			return tweet;
+		}
+
+		function _findTweetIndex(tweet) {
+			for (var i = tweet.length; i--;) {
+				if (tweet.id_str == $scope.tweets[i].id_str) {
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
+		function _isTweet(data) {
+			return data.friends == undefined && data.created_at !== undefined && Object.keys(data).length != 0;
 		}
 
 		_initialize();
