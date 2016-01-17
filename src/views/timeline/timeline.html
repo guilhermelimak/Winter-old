@@ -12,7 +12,7 @@
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
 		<div
-			class="text-right"
+			class="text-left"
 			ng-if="tweet.retweeted_status">
 			<small>
 				<i class="fa fa-retweet"></i> Retweeted by @{{ tweet.user.screen_name }}
