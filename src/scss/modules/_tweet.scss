@@ -20,6 +20,7 @@
 			display: block;
 			max-width: 400px;
 			margin-bottom: 1em;
+			cursor: pointer;
 		}
 
 		&--gif,
@@ -28,10 +29,9 @@
 		}
 	}
 
-	&__actions {
-		> * {
-			padding: 0 1em;
-		}
+	&__action {
+		display: inline-block;
+		padding: 0 1em;
 	}
 
 	&--retweeted-by-user {
