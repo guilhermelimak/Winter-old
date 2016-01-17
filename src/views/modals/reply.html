@@ -8,14 +8,25 @@
   </div>
 
   <div class="modal-body">
-    <div>
-      <h4
+    <div class="media">
+      <div class="media-left">
+        <img
+        class="media-object"
+        ng-if="!tweet.retweeted_status"
         ng-click="showProfileModal(tweet)"
-        class="media-heading">
-        {{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small>
-      </h4>
+        alt="{{ tweet.user.name }}"
+        ng-src="{{ tweet.user.profile_image_url }}">
+      </div>
 
-      <p ng-bind-html="tweet.text"></p>
+      <div class="media-body">
+        <h4
+          ng-click="showProfileModal(tweet)"
+          class="media-heading">
+          {{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small>
+        </h4>
+
+        <p ng-bind-html="tweet.text"></p>
+      </div>
     </div>
     <br>
     <textarea

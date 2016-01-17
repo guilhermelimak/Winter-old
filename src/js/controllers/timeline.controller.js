@@ -46,7 +46,7 @@
 					});
 				}
 
- 				$scope.tweets = data.map(_detectLinks);
+ 				$scope.tweets = data.map(_detectLinks).map(_detectResources);
 				$scope.$apply();
 			});
 		}
@@ -56,7 +56,7 @@
 				if (_receivedReply(data)) _notify(data);
 
 				if (_isTweet(data) && !(data.retweeted_by_user = _wasRetweetedByUser(data))) {
-					$scope.tweets.unshift(_detectLinks(data));
+					$scope.tweets.unshift(_detectResources(_detectLinks(data)));
 					$scope.$apply();
 				}
 			});
@@ -75,6 +75,13 @@
 
 			client.favorites(type, { id: tweet.id_str }, () => {
 				tweet.favorited = !tweet.favorited;
+
+				if (type == 'destroy') {
+					tweet.favorite_count--;
+				} else {
+					tweet.favorite_count++;
+				}
+
 				$scope.$apply();
 			});
 		}
@@ -137,11 +144,36 @@
 					tweet.text = $sce.trustAsHtml(tweet.text);
 				}
 			} catch (e) {
-				console.error("Not parseable tweet: ")
-				console.error(tweet);
+				console.error("Winter: Not parseable tweet: ", tweet)
 			}
 
 			return tweet;
+		}
+
+		function _detectResources(tweet) {
+			try {
+				if (tweet.extended_entities) {
+					tweet.extended_entities.media =
+						tweet.extended_entities.media.map(_detectMediaResources);
+				}
+
+				return tweet;
+			} catch (e) {
+				console.error("Winter: Not parseable tweet", e)
+			}
+		}
+
+		function _detectMediaResources(media) {
+			if (media.type == 'video' || media.type == "animated_gif") {
+				media.video_info.variants = media.video_info.variants.map(_setVariantTrustedUrl);
+			}
+
+			return media;
+		}
+
+		function _setVariantTrustedUrl(variant) {
+			variant.url = $sce.trustAsResourceUrl(variant.url);
+			return variant;
 		}
 
 		function _findTweetIndex(tweet) {
