@@ -63,12 +63,23 @@
 					ng-if="!tweet.retweeted_status"
 					ng-bind-html="tweet.text"></p>
 
-				<img
-					ng-click="showPictureModal(media.media_url_https)"
-					ng-if="media.type == 'photo'"
-					ng-src="{{ media.media_url_https }}"
+				<div
 					ng-repeat="media in tweet.extended_entities.media"
-					width="100%">
+				>
+					
+					<img
+						ng-click="showPictureModal(media.media_url_https)"
+						ng-if="media.type == 'photo'"
+						ng-src="{{ media.media_url_https }}"
+						width="100%">
+
+					<video 
+						ng-if="media.type == 'video'"
+						ng-src="{{ media.video_info.variants[0].url }}"
+					>
+					</video>
+				</div>
+
 
 				<div
 					ng-if="!tweet.retweeted_status"
