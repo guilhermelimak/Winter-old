@@ -30,22 +30,26 @@
 	}
 
 	&__actions {
-		max-width: 300px;
 		display: flex;
-	  justify-content: space-around;
+		max-width: 300px;
+		justify-content: space-around;
 	}
 
 	&__action {
 		flex: 1;
-		display: inline-block;
-		align-content: space-around;
 
 		&::after {
 			content: attr(data-count);
+			font-size: .8em;
 		}
 
-		> .fa {
+		a.fa {
+			color: #2A9FD6;
 			font-size: 1.1em;
+
+			&:hover {
+				color: darken(#2A9FD6, 15%);
+			}
 		}
 	}
 
@@ -54,14 +58,22 @@
 	}
 
 	&--retweeted-by-user {
-		.fa-retweet {
-			color: #00bb00;
+		a.fa-retweet {
+			color: #00bb00 !important;
+
+			&:hover {
+				color: darken(#00bb00, 15%) !important;
+			}
 		}
 	}
 
 	&--favorited-by-user {
-		.fa-star {
-			color: yellow;
+		a.fa-star {
+			color: yellow !important;
+
+			&:hover {
+				color: darken(yellow, 15%) !important;
+			}
 		}
 	}
 }

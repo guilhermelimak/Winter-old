@@ -81,17 +81,7 @@
 		function favorite(tweet) {
 			var type = tweet.favorited ? 'destroy' : 'create';
 
-			client.favorites(type, { id: tweet.id_str }, () => {
-				tweet.favorited = !tweet.favorited;
-
-				if (type == 'destroy') {
-					tweet.favorite_count--;
-				} else {
-					tweet.favorite_count++;
-				}
-
-				$scope.$apply();
-			});
+			client.favorites(type, { id: tweet.id_str }, () => _toggleFavorite(type, tweet));
 		}
 
 		function reply(replyObject) {
@@ -138,6 +128,18 @@
 			}
 
 			$scope.tweets[index].retweeted_by_user = !$scope.tweets[index].retweeted_by_user;
+			$scope.$apply();
+		}
+
+		function _toggleFavorite(type, tweet) {
+			if (type == 'destroy') {
+				tweet.favorite_count--;
+			} else {
+				tweet.favorite_count++;
+			}
+
+			tweet.favorited = !tweet.favorited;
+
 			$scope.$apply();
 		}
 

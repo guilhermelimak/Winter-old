@@ -14,13 +14,6 @@
 		}"
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
-		<div
-			class="text-left"
-			ng-if="tweet.retweeted_status">
-			<small>
-				<i class="fa fa-retweet"></i> Retweeted by @{{ tweet.user.screen_name }}
-			</small>
-		</div>
 
 		<div ng-controller="DropdownController" class="pull-right">
 			<span uib-dropdown on-toggle="toggled(open)">
@@ -38,20 +31,31 @@
 	    </span>
 		</div>
 
+		<div
+			ng-if="tweet.retweeted_status"
+			class="media">
+			<div class="media-left">
+				<i class="fa fa-retweet"></i>
+			</div>
+			<div class="media-body">
+				<small>Retweeted by @{{ tweet.user.screen_name }}</small>
+			</div>
+		</div>
+
 		<div class="media">
 			<div class="media-left">
 				<a>
 					<img
 						class="media-object tweet__avatar"
-						ng-if="tweet.retweeted_status"
-						ng-click="showProfileModal(tweet.retweeted_status)"
 						alt="{{ tweet.retweeted_status.user.name }}"
+						ng-click="showProfileModal(tweet.retweeted_status)"
+						ng-if="tweet.retweeted_status"
 						ng-src="{{ tweet.retweeted_status.user.profile_image_url }}">
 					<img
 						class="media-object tweet__avatar"
-						ng-if="!tweet.retweeted_status"
-						ng-click="showProfileModal(tweet)"
 						alt="{{ tweet.user.name }}"
+						ng-click="showProfileModal(tweet)"
+						ng-if="!tweet.retweeted_status"
 						ng-src="{{ tweet.user.profile_image_url }}">
 				</a>
 			</div>
@@ -109,7 +113,6 @@
 						ng-src="{{ media.video_info.variants[0].url }}">
 					</video>
 				</div>
-
 
 				<div
 					ng-if="!tweet.retweeted_status"
