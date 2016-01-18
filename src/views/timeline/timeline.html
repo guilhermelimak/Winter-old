@@ -5,7 +5,7 @@
 	<i class="fa fa-2x fa-spin fa-circle-o-notch"></i>
 </div>
 
-<ul class="list-group">
+<ul class="tweet-list list-group">
 	<li
 		class="tweet list-group-item"
 		ng-class="{
@@ -119,17 +119,17 @@
 						<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
 					</div>
 
-					<div class="tweet__action">
+					<div class="tweet__action" data-count="{{ tweet.retweeted_status.retweet_count }}">
 						<a
 							class="fa fa-retweet"
 							ng-if="!tweet.user.protected"
 							ng-click="retweet(tweet, $index)"></a>
-						<span ng-if="!tweet.user.protected" class="badge">{{ tweet.retweet_count }}</span>
 					</div>
 
-					<div class="tweet__action">
-						<a class="fa fa-star" ng-click="favorite(tweet)"></a>
-						<span class="badge">{{ tweet.favorite_count }}</span>
+					<div class="tweet__action" data-count="{{ tweet.retweeted_status.favorite_count }}">
+						<a
+							class="fa fa-star"
+							ng-click="favorite(tweet)"></a>
 					</div>
 				</div>
 
@@ -141,16 +141,17 @@
 						<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
 					</div>
 
-					<div class="tweet__action">
-						<a class="fa fa-retweet" ng-click="retweet(tweet.retweeted_status, $index)"></a>
-						<span class="badge">{{ tweet.retweeted_status.retweet_count }}</span>
+					<div class="tweet__action" data-count="{{ tweet.retweeted_status.retweet_count }}">
+						<a
+							class="fa fa-retweet"
+							ng-click="retweet(tweet.retweeted_status, $index)"></a>
 					</div>
 
-					<div class="tweet__action">
-						<a class="fa fa-star" ng-click="favorite(tweet.retweeted_status)"></a>
-						<span class="badge">{{ tweet.retweeted_status.favorite_count }}</span>
+					<div class="tweet__action" data-count="{{ tweet.retweeted_status.favorite_count }}">
+						<a
+							class="fa fa-star"
+							ng-click="favorite(tweet.retweeted_status)"></a>
 					</div>
-
 				</div>
 			</div>
 		</div>

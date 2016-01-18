@@ -1,0 +1,14 @@
+::-webkit-scrollbar {
+	width: 1.3em;
+  padding: .2em;
+
+  &-track {
+    background: none;
+  }
+
+  &-thumb {
+    background: #333;
+    border: 1px solid #0D0D0D;
+    cursor: pointer;
+  }
+}
