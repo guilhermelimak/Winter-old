@@ -29,24 +29,39 @@
 		}
 	}
 
+	&__actions {
+		max-width: 300px;
+		display: flex;
+	  justify-content: space-around;
+	}
+
 	&__action {
+		flex: 1;
 		display: inline-block;
-		padding: 0 1em;
-	}
+		align-content: space-around;
 
-	&--retweeted-by-user {
-		a.fa-retweet {
-			color: #00bb00;
+		&::after {
+			content: attr(data-count);
 		}
-	}
 
-	&--favorited-by-user {
-		a.fa-star {
-			color: yellow;
+		> .fa {
+			font-size: 1.1em;
 		}
 	}
 
 	&__dropdown {
 		padding: 0 3px 0 3px;
+	}
+
+	&--retweeted-by-user {
+		.fa-retweet {
+			color: #00bb00;
+		}
+	}
+
+	&--favorited-by-user {
+		.fa-star {
+			color: yellow;
+		}
 	}
 }

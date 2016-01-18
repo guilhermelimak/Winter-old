@@ -46,7 +46,15 @@
 					});
 				}
 
- 				$scope.tweets = data.map(_detectLinks).map(_detectResources);
+ 				$scope.tweets =
+					data
+					.map(_detectLinks)
+					.map(_detectResources)
+					.map((tweet) => {
+						tweet.retweeted_by_user = _wasRetweetedByUser(tweet);
+						return tweet;
+					});
+
 				$scope.$apply();
 			});
 		}
@@ -105,14 +113,18 @@
 		function _notify(data) {
 			var notification = {
 				title: `@${data.user.screen_name}`,
-				body: 'data.text',
-				icon: data.user.profile_image_url_https
+				body: data.text,
+				icon: data.user.profile_image_url_https,
+				sticky: true
 			}
 
 			if (Notification.permission !== "granted") {
 				Notification.requestPermission();
 			} else {
-				new Notification(notification.title, {body:notification.body, icon:notification.icon});
+				var notification = new Notification(notification.title, {body:notification.body, icon:notification.icon});
+				notification.onclick = () => {
+					Modal.showReplyModal(data);
+				};
 			}
 		}
 

@@ -11,7 +11,7 @@
     <div class="media tweet">
       <div class="media-left">
         <img
-          class="media-object"
+          class="media-object tweet__avatar"
           alt="{{ tweet.user.name }}"
           ng-click="showProfileModal(tweet)"
           ng-src="{{ tweet.user.profile_image_url }}">
@@ -20,7 +20,7 @@
       <div class="media-body">
         <h4
           ng-click="showProfileModal(tweet)"
-          class="media-heading">
+          class="media-heading tweet__heading">
           {{ tweet.user.name }} <small>@{{ tweet.user.screen_name }}</small>
         </h4>
 
