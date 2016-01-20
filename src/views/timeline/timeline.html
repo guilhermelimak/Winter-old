@@ -125,7 +125,6 @@
 					<div class="tweet__action" data-count="{{ tweet.retweeted_status.retweet_count }}">
 						<a
 							class="fa fa-retweet"
-							ng-if="!tweet.user.protected"
 							ng-click="retweet(tweet, $index)"></a>
 					</div>
 
@@ -156,6 +155,8 @@
 							ng-click="favorite(tweet.retweeted_status)"></a>
 					</div>
 				</div>
+
+				<a class="tweet__conversation" ng-href="/conversation/123"><small>Conversation</small></a>
 			</div>
 		</div>
 	</li>

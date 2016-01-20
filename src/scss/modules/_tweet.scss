@@ -57,6 +57,10 @@
 		padding: 0 3px 0 3px;
 	}
 
+	&__conversation {
+		padding-top: .5em;
+	}
+
 	&--retweeted-by-user {
 		a.fa-retweet {
 			color: #00bb00 !important;

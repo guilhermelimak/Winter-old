@@ -12,7 +12,11 @@
       controller: 'TimelineController',
       controllerAs: 'timeline'
     })
+    .when('/conversation/:tweet', {
+      templateUrl: 'views/timeline/conversation.html',
+      controller: 'ConversationController',
+      controllerAs: 'conversation'
+    })
     .otherwise('/');
   });
-
 })();
