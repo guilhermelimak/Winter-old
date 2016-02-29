@@ -15,7 +15,7 @@
     "start": "electron .",
     "build": "electron-packager . Winter --out=dist --ignore='(dist|src|bower_components|gulpfile.js|bower.json)' --prune --all --version=0.36.3",
     "development": "rm -rf build && gulp",
-    "dependencies" : "npm install -g bower gulp && npm install && bower install"
+    "dependencies": "npm install -g bower gulp && npm install && bower install"
   },
   "files": [
     "index.js",
@@ -27,6 +27,7 @@
     "electron"
   ],
   "dependencies": {
+    "clipboard": "^1.5.9",
     "node-twitter-api": "^1.6.3"
   },
   "devDependencies": {
