@@ -239,6 +239,8 @@
 		function _isTweet(data) {
 			return data.friends == undefined &&
 						 data.created_at !== undefined &&
+						 data.event !== "favorite" &&
+						 data.event !== "unfavorite" &&
 						 Object.keys(data).length != 0;
 		}
 
