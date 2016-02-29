@@ -11,13 +11,6 @@
     $scope.ok = ok;
     $scope.cancel = cancel;
 
-    // hotkeys.add({
-    //   combo: 'enter',
-    //   description: 'Submit tweet',
-    //   allowIn: ['TEXTAREA'],
-    //   callback: $scope.ok
-    // });
-
     function ok() {
       $uibModalInstance.close($scope.newTweet);
     }
