@@ -4,9 +4,9 @@ const concat = require('gulp-concat');
 
 const src = {
   globs: {
+		js: ['./src/js/**/*.js'],
     html: ['./src/**/*.html'],
     sass: ['./src/scss/**/*.scss'],
-    js: ['./src/js/**/*.js'],
     modules: ['./src/js/modules/**/*.js']
   },
   folder: './src/',
@@ -31,7 +31,8 @@ const src = {
     './src/js/controllers/profile.modal.controller.js',
     './src/js/controllers/new-tweet.modal.controller.js',
     './src/js/controllers/picture.modal.controller.js',
-    './src/js/controllers/navbar.controller.js'
+		'./src/js/controllers/navbar.controller.js',
+    './src/js/controllers/tweetdropdown.controller.js'
   ],
   fonts: './bower_components/font-awesome/fonts/**'
 };

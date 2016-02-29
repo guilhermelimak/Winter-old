@@ -3,7 +3,9 @@
 
 	angular
 	.module('winter')
-	.controller('TimelineController', ['$scope', '$interval', 'Twitter','$sce', 'Modal', 'HotkeyRegistry', 'UserStorage', '$compile', ($scope, $interval, Twitter, $sce, Modal, HotkeyRegistry, UserStorage, $compile) => {
+	.controller('TimelineController',
+	['$scope', '$interval', 'Twitter','$sce', 'Modal', 'HotkeyRegistry', 'UserStorage', '$compile',
+	($scope, $interval, Twitter, $sce, Modal, HotkeyRegistry, UserStorage, $compile) => {
 		const client = new Twitter();
 
 		$scope.tweets = [];
@@ -14,6 +16,7 @@
 
 		$scope.retweet = retweet;
 		$scope.favorite = favorite;
+		$scope.erase = erase;
 		$scope.showReplyModal = Modal.showReplyModal;
 		$scope.showProfileModal = Modal.showProfileModal;
 		$scope.showPictureModal = Modal.showPictureModal;
@@ -50,24 +53,14 @@
 					data
 					.map(_detectLinks)
 					.map(_detectResources)
-					.map((tweet) => {
-						tweet.retweeted_by_user = _wasRetweetedByUser(tweet);
-						return tweet;
-					});
+					.map(_setHelperProperties);
 
 				$scope.$apply();
 			});
 		}
 
 		function startStream() {
-			client.getStream('user', { "with": "followings" }, (data, response) => {
-				if (_receivedReply(data)) _notify(data);
-
-				if (_isTweet(data) && !(data.retweeted_by_user = _wasRetweetedByUser(data))) {
-					$scope.tweets.unshift(_detectResources(_detectLinks(data)));
-					$scope.$apply();
-				}
-			});
+			client.getStream('user', { "with": "followings" }, _addTweet);
 		}
 
 		function retweet(tweet, index) {
@@ -88,12 +81,21 @@
 			client.statuses('update', replyObject, angular.noop);
 		}
 
+		function erase(tweet, index) {
+			console.log("Erasing: ", tweet);
+			client.statuses("destroy", { id: tweet.id_str }, () => _removeTweet(index));
+		}
+
 		function _getRetweetStatus(tweet) {
 			client.statuses('retweet', { id: tweet.id_str })
 		}
 
 		function _wasRetweetedByUser(data) {
 			return data.retweeted || (data.retweeted_status && data.user.screen_name == UserStorage.user.screen_name);
+		}
+
+		function _wasTweetedByUser(data) {
+			return (data.user.screen_name == UserStorage.user.screen_name);
 		}
 
 		function _receivedReply(data) {
@@ -116,6 +118,22 @@
 					Modal.showReplyModal(data);
 				};
 			}
+		}
+
+		function _addTweet(data) {
+			if (_receivedReply(data)) _notify(data);
+
+			data = _setHelperProperties(data);
+
+			if (_isTweet(data) && !(data.retweeted_by_user)) {
+				$scope.tweets.unshift(_detectResources(_detectLinks(data)));
+				$scope.$apply();
+			}
+		}
+
+		function _removeTweet(index) {
+			$scope.tweets.splice(index, 1);
+			$scope.$apply();
 		}
 
 		function _toggleRetweet(index, data) {
@@ -174,21 +192,33 @@
 			try {
 				if (tweet.extended_entities) {
 					tweet.extended_entities.media =
-						tweet.extended_entities.media.map(_detectMediaResources);
+						tweet.extended_entities.media
+						.map(_detectMediaResources);
 				}
 
 				return tweet;
 			} catch (e) {
-				console.error("Winter: Not parseable tweet", e)
+				console.error("Winter: Not parseable tweet. Error thrown: ", e)
 			}
 		}
 
 		function _detectMediaResources(media) {
 			if (media.type == 'video' || media.type == "animated_gif") {
-				media.video_info.variants = media.video_info.variants.map(_setVariantTrustedUrl);
+				media.video_info.variants =
+					media.video_info.variants
+					.map(_setVariantTrustedUrl);
 			}
 
 			return media;
+		}
+
+		function _setHelperProperties(tweet) {
+			if (_isTweet(tweet)) {
+				tweet.retweeted_by_user = _wasRetweetedByUser(tweet);
+				tweet.tweeted_by_user = _wasTweetedByUser(tweet);
+			}
+
+			return tweet;
 		}
 
 		function _setVariantTrustedUrl(variant) {
@@ -207,7 +237,9 @@
 		}
 
 		function _isTweet(data) {
-			return data.friends == undefined && data.created_at !== undefined && Object.keys(data).length != 0;
+			return data.friends == undefined &&
+						 data.created_at !== undefined &&
+						 Object.keys(data).length != 0;
 		}
 
 		_initialize();

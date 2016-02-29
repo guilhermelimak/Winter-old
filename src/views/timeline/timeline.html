@@ -15,17 +15,26 @@
 		ng-click="logTweet(tweet)"
 		ng-repeat="tweet in tweets">
 
-		<div ng-controller="DropdownController" class="pull-right">
-			<span uib-dropdown on-toggle="toggled(open)">
-	     	<button type="button" class="btn tweet__dropdown" uib-dropdown-toggle ng-disabled="disabled">
+		<div
+			ng-controller="TweetDropdownController as dropdown"
+			class="pull-right">
+			<span
+				uib-dropdown
+				on-toggle="dropdown.toggled(open, tweet)">
+	     	<button
+					uib-dropdown-toggle
+					type="button"
+					class="btn tweet__dropdown"
+					ng-disabled="disabled">
 	     		<span class="caret"></span>
 	      </button>
-	      <ul uib-dropdown-menu aria-labelledby="simple-dropdown" class="dropdown-menu-right">
-	        <li>
-	          <a href>Copy tweet link</a>
-	        </li>
-	        <li>
-	          <a href>Caaaaaaaaaa</a>
+
+	      <ul
+					uib-dropdown-menu
+					class="dropdown-menu-right">
+					<li ng-if="tweet.tweeted_by_user">
+						<a
+							ng-click="erase(tweet, $index)">Delete tweet</a>
 	        </li>
 	      </ul>
 	    </span>
@@ -117,19 +126,24 @@
 				<div
 					ng-if="!tweet.retweeted_status"
 					class="text-left tweet__actions">
-
 					<div class="tweet__action">
-						<a class="fa fa-reply" ng-click="showReplyModal(tweet)"></a>
+						<a
+							class="fa fa-reply"
+							ng-click="showReplyModal(tweet)"></a>
 					</div>
 
-					<div class="tweet__action" data-count="{{ tweet.retweeted_status.retweet_count }}">
+					<div
+						class="tweet__action"
+						data-count="{{ tweet.retweeted_status.retweet_count }}">
 						<a
 							class="fa fa-retweet"
 							ng-if="!tweet.user.protected"
 							ng-click="retweet(tweet, $index)"></a>
 					</div>
 
-					<div class="tweet__action" data-count="{{ tweet.retweeted_status.favorite_count }}">
+					<div
+						class="tweet__action"
+						data-count="{{ tweet.retweeted_status.favorite_count }}">
 						<a
 							class="fa fa-star"
 							ng-click="favorite(tweet)"></a>
@@ -141,16 +155,22 @@
 					class="text-left tweet__actions">
 
 					<div class="tweet__action">
-						<a class="fa fa-reply" ng-click="showReplyModal(tweet.retweeted_status)"></a>
+						<a
+							class="fa fa-reply"
+							ng-click="showReplyModal(tweet.retweeted_status)"></a>
 					</div>
 
-					<div class="tweet__action" data-count="{{ tweet.retweeted_status.retweet_count }}">
+					<div
+						class="tweet__action"
+						data-count="{{ tweet.retweeted_status.retweet_count }}">
 						<a
 							class="fa fa-retweet"
 							ng-click="retweet(tweet.retweeted_status, $index)"></a>
 					</div>
 
-					<div class="tweet__action" data-count="{{ tweet.retweeted_status.favorite_count }}">
+					<div
+						class="tweet__action"
+						data-count="{{ tweet.retweeted_status.favorite_count }}">
 						<a
 							class="fa fa-star"
 							ng-click="favorite(tweet.retweeted_status)"></a>
