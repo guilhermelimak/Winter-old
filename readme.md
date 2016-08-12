@@ -20,10 +20,7 @@ $ npm start
 $ npm run build
 ```
 
-Builds the app for OS X, Linux, and Windows, using [electron-packager](https://github.com/maxogden/electron-packager).
-
 ---
-
 
 ## Features
 
@@ -31,25 +28,23 @@ Builds the app for OS X, Linux, and Windows, using [electron-packager](https://g
 - [x] Timeline Column
 - [ ] Mentions Column
 - [ ] Direct Messages Column
-- [ ] Mention Notification
+- [x] Mention Notification
 - [x] User Profile Modal
 - [x] User Profile Image Modal
 - [ ] Show Tweet Modal
 - [x] New Tweet Modal
+- [x] Delete Tweet
 - [x] Tweet Media
+  - [x] Copy Url to Clipboard
   - [x] Multiple Images
   - [x] Open Url on Preferred Browser
-  - [ ] Audio
   - [x] Gif
   - [x] Video
 - [x] Reply Modal
 - [x] Hotkeys
   - [x] n -> New tweet modal
-- [ ] Retweet *(working, cant undo retweet, unstable)*
-- [ ] Fav *(working, unstable)*
-
-
-
+- [ ] Retweet *(working, cant undo retweet after reloading, unstable)*
+- [x] Fav
 
 ## License
 
