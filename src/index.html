@@ -1,37 +1,30 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html ng-app="winter">
 	<head>
 		<meta charset="utf-8">
 		<title>Winter</title>
 		<link rel="stylesheet" href="css/main.css">
 	</head>
 	<body>
-		<div class="container">
-			<header>
-				<h1>Winter</h1>
-				<p class="lead">Winter is a cool twitter client.</p>
-				<hr>
-			</header>
+		<section class="container-fluid">
+			<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="navbarController">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li class="active"><a ng-click="goHome()"> <i class="fa fa-clock-o"></i> Timeline</a></li>
+						<button
+							class="btn btn-primary new-tweet-button text-left pull-right"
+							ng-click="showNewTweetModal()"
+						>
+							<span class="fa fa-pencil-square-o"></span>
+						</button>
+					</ul>
+				</ul>
+				</div>
+			</nav>
 
-			<section class="main">
-				<form>
-					<div class="form-group">
-						<label>
-							Username
-							<input class="form-control" type="text" placeholder="@yo_usaname" id="username" name="username">
-						</label>
-					</div>
-					<div class="form-group">
-						<label>
-							Senha
-							<input class="form-control" type="password" placeholder="Passw0rd!" id="senha" name="senha">
-						</label>
-					</div>
-					<button class="btn btn-default" type="submit">Login</button>
-				</form>
+			<ng-view></ng-view>
+		</section>
 
-			<footer></footer>
-		</div>
-		<script src="../bower_components/angular/angular.min.js" charset="utf-8"></script>
+		<script src="js/app.js"></script>
 	</body>
 </html>

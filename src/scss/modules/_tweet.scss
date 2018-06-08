@@ -1,0 +1,79 @@
+.tweet {
+	word-break: break-word;
+
+	&__text {
+		color: #FFF;
+	}
+
+	&__heading {
+		font-size: 1.3em;
+		cursor: pointer;
+	}
+
+	&__avatar {
+		border-radius: .25em;
+		box-shadow: 0px .5px #eee;
+	}
+
+	&__media {
+		&--image {
+			display: block;
+			max-width: 400px;
+			margin-bottom: 1em;
+			cursor: pointer;
+		}
+
+		&--gif,
+		&--video {
+			max-width: 100%;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		max-width: 300px;
+		justify-content: space-around;
+	}
+
+	&__action {
+		flex: 1;
+
+		&::after {
+			content: attr(data-count);
+			font-size: .8em;
+		}
+
+		a.fa {
+			color: #2A9FD6;
+			font-size: 1.1em;
+
+			&:hover {
+				color: darken(#2A9FD6, 15%);
+			}
+		}
+	}
+
+	&__dropdown {
+		padding: 0 3px 0 3px;
+	}
+
+	&--retweeted-by-user {
+		a.fa-retweet {
+			color: #00bb00 !important;
+
+			&:hover {
+				color: darken(#00bb00, 15%) !important;
+			}
+		}
+	}
+
+	&--favorited-by-user {
+		a.fa-star {
+			color: yellow !important;
+
+			&:hover {
+				color: darken(yellow, 15%) !important;
+			}
+		}
+	}
+}

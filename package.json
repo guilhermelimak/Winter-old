@@ -2,7 +2,7 @@
   "name": "winter",
   "productName": "Winter",
   "version": "0.0.0",
-  "description": "Twitter client",
+  "description": "A really cool twitter client.",
   "license": "MIT",
   "repository": "armand1m/winter",
   "author": {
@@ -10,12 +10,12 @@
     "email": "armando.mag95@gmail.com",
     "url": "github.com/armand1m"
   },
-  "electronVersion": "0.36.0",
+  "electronVersion": "0.36.3",
   "scripts": {
-    "test": "xo",
     "start": "electron .",
-    "devbuild": "rm -rf build && gulp",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore='^/dist$' --prune --asar --all --version=$npm_package_electronVersion"
+    "build": "electron-packager . Winter --out=dist --ignore='(dist|src|bower_components|gulpfile.js|bower.json)' --prune --all --version=0.36.3",
+    "development": "rm -rf build && gulp",
+    "dependencies": "npm install -g bower gulp && npm install && bower install"
   },
   "files": [
     "index.js",
@@ -27,21 +27,16 @@
     "electron"
   ],
   "dependencies": {
-    "electron-debug": "^0.5.0"
+    "copy-paste": "^1.1.4",
+    "node-twitter-api": "^1.6.3"
   },
   "devDependencies": {
+    "electron-debug": "^0.5.0",
     "electron-packager": "^5.0.0",
-    "electron-prebuilt": "^0.36.0",
+    "electron-prebuilt": "^0.36.3",
     "gulp": "^3.9.0",
     "gulp-clean": "^0.3.1",
-    "gulp-sass": "^2.1.1",
-    "xo": "^0.12.0"
-  },
-  "xo": {
-    "esnext": true,
-    "envs": [
-      "node",
-      "browser"
-    ]
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.1.1"
   }
 }

@@ -1,9 +1,9 @@
 {
   "name": "winter",
-  "description": "Twitter client",
+  "description": "Winter is a cool twitter client.",
   "main": "index.js",
   "authors": [
-    "[object Object]"
+    "Armando Magalhães <armando.mag95@gmail.com>"
   ],
   "license": "MIT",
   "keywords": [
@@ -18,5 +18,14 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.8",
+    "angular": "~1.4.8",
+    "bootstrap-sass": "bootstrap-sass-official#~3.3.6",
+    "font-awesome": "fontawesome#~4.5.0",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.6.0",
+    "angular-sanitize": "~1.4.8",
+    "angular-bootstrap": "~0.14.3"
+  }
 }

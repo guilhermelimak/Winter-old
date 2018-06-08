@@ -4,9 +4,12 @@
  * Licensed under MIT (https://github.com/twbs/../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/blob/master/LICENSE)
  */
 
-$bootstrap_src: "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/";
+// Theme
+@import "themes/cyborg/variables";
+@import "custom-variables";
+@import "themes/cyborg/bootswatch";
+
 // Core variables and mixins
-@import "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 // Reset and dependencies

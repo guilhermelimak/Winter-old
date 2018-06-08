@@ -1,9 +1,43 @@
+* {
+	outline: none;
+}
+
 html,
 body {
 	padding: 0;
 	margin: 0;
 }
 
+.container {
+	margin: 0;
+	padding: 0;
+}
+
 body {
 	font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+	padding-top: $navbar-height;
+
+	> section {
+		padding: 0 !important;
+	}
+}
+
+a {
+	cursor: pointer;
+
+	&.fa {
+		text-decoration: none;
+	}
+}
+
+.close {
+	color: #FFF;
+}
+
+button {
+	-webkit-app-region: no-drag;
+}
+
+.modal-open {
+  overflow-y: scroll;
 }

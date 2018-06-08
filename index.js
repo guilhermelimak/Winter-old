@@ -6,10 +6,11 @@ const app = electron.app;
 // report crashes to the Electron project
 require('crash-reporter').start();
 
-// adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')();
+require('electron-debug')({
+    showDevTools: true
+});
 
-// prevent window being garbage collected
+
 let mainWindow;
 
 function onClosed() {
@@ -18,9 +19,11 @@ function onClosed() {
 
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
-		width: 600,
-		height: 400
+		width: 500,
+		height: 700
 	});
+
+	win.setMenu(null);
 
 	win.loadURL(`file://${__dirname}/build/index.html`);
 	win.on('closed', onClosed);
@@ -35,9 +38,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
+	mainWindow = mainWindow || createMainWindow();
 });
 
 app.on('ready', () => {

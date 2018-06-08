@@ -1,24 +1,54 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-const del = require('del');
+const concat = require('gulp-concat');
 
-var src = {
+const src = {
   globs: {
-    html: ['./src/**/*.html']
+		js: ['./src/js/**/*.js'],
+    html: ['./src/**/*.html'],
+    sass: ['./src/scss/**/*.scss'],
+    modules: ['./src/js/modules/**/*.js']
   },
   folder: './src/',
-  sass: ['./src/scss/main.scss']
+  sass: ['./src/scss/main.scss'],
+  js: [
+    './bower_components/angular/angular.js',
+    './bower_components/angular-bootstrap/ui-bootstrap.js',
+    './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+    './bower_components/angular-hotkeys/build/hotkeys.js',
+    './bower_components/angular-route/angular-route.js',
+    './bower_components/angular-sanitize/angular-sanitize.js',
+    './src/js/app.globals.js',
+    './src/js/app.module.js',
+    './src/js/app.config.js',
+    './src/js/services/user-storage.service.js',
+    './src/js/services/twitter.service.js',
+    './src/js/services/modal.service.js',
+    './src/js/services/hotkey.registry.service.js',
+    './src/js/controllers/login.controller.js',
+    './src/js/controllers/timeline.controller.js',
+    './src/js/controllers/reply.modal.controller.js',
+    './src/js/controllers/profile.modal.controller.js',
+    './src/js/controllers/new-tweet.modal.controller.js',
+    './src/js/controllers/picture.modal.controller.js',
+		'./src/js/controllers/navbar.controller.js',
+    './src/js/controllers/tweetdropdown.controller.js'
+  ],
+  fonts: './bower_components/font-awesome/fonts/**'
 };
 
-var dest = {
+const dest = {
   globs: {
     all: ['./build/']
   },
   folder: './build/',
-  css: './build/css'
+  css: './build/css',
+  js: './build/js',
+  modules: './build/js/modules',
+  fonts: './build/fonts'
 };
 
-gulp.task('copy', (done) => {
+gulp.task('html', (done) => {
   gulp
   .src(src.globs.html)
   .pipe(gulp.dest(dest.folder))
@@ -33,9 +63,35 @@ gulp.task('sass', (done) => {
   .on('end', done);
 });
 
-gulp.task('watchers', () => {
-  gulp.watch(src.sass, ['sass']);
-  gulp.watch(src.globs.html, ['copy']);
+gulp.task('js', (done) => {
+  gulp
+  .src(src.js)
+  .pipe(concat('app.js'))
+  .pipe(gulp.dest(dest.js))
+  .on('end', done);
 });
 
-gulp.task('default', ['watchers', 'copy', 'sass']);
+gulp.task('fonts', (done) => {
+  gulp
+  .src(src.fonts)
+  .pipe(gulp.dest(dest.fonts))
+  .on('end', done);
+});
+
+gulp.task('modules', (done) => {
+  gulp
+  .src(src.globs.modules)
+  .pipe(gulp.dest(dest.modules))
+  .on('end', done);
+});
+
+gulp.task('watchers', () => {
+  gulp.watch(src.globs.sass, ['sass']);
+  gulp.watch(src.globs.html, ['html']);
+  gulp.watch(src.globs.js, ['js']);
+  gulp.watch(src.globs.modules, ['modules']);
+});
+
+gulp.task('default', ['watchers', 'build']);
+
+gulp.task('build', ['html', 'js', 'modules', 'sass', 'fonts']);

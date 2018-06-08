@@ -1,0 +1,13 @@
+.form {
+  input {
+    transition: all 0.15s linear;
+  }
+
+  input.ng-invalid.ng-touched {
+    border-bottom: 2px solid #FA0F0E;
+  }
+
+  input.ng-valid.ng-touched {
+    border-bottom: 2px solid #78F09F;
+  }
+}
